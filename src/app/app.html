@@ -1,21 +1,43 @@
-<div class="container">
-  @for (player of scorekeeperForm.players; track $index) {
-    <div>
-      <input type="text" [formField]="player.name" />
-      @for (score of player.score; track $index) {
-        <div>
-          <input
-            type="number"
-            [formField]="score"
-            (change)="scoreChange($index)"
-            placeholder="enter score"
-          />
-        </div>
+<div class="flex flex-row p-1">
+  <table>
+    <thead>
+      <th class="border p-1"></th>
+      @for (player of scorekeeperForm.players; track player) {
+        <th class="border p-1">
+          <input type="text" [formField]="player.name" class="text-center" />
+        </th>
       }
-      <div class="sum">{{ calculateSum(player.score().value()) }}</div>
-    </div>
-  }
-  <div><button (click)="addPlayer()">Add Player</button></div>
+    </thead>
+    <tbody>
+      @for (round of scorekeeperForm.players[0].score; track $index; let i = $index) {
+        <tr>
+          <td class="border p-1 text-right">{{ i + 1 }}.</td>
+          @for (player of scorekeeperForm.players; track player) {
+            <td class="border p-1">
+              <input
+                type="number"
+                [formField]="player.score[i]"
+                (change)="scoreChange(i)"
+                placeholder="enter score"
+                class="w-full text-right"
+              />
+            </td>
+          }
+        </tr>
+      }
+      <tr>
+        <td class="border p-1 font-bold">Total</td>
+        @for (player of scorekeeperForm.players; track player) {
+          <td class="border p-1 font-bold text-right">
+            {{ calculateSum(player.score().value()) }}
+          </td>
+        }
+      </tr>
+    </tbody>
+  </table>
+  <div class="ml-1">
+    <button (click)="addPlayer()" class="border p-1 cursor-pointer">Add Player</button>
+  </div>
 </div>
 
 <router-outlet />
