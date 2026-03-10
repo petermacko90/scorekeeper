@@ -2,9 +2,14 @@
   <table>
     <thead>
       <th class="border p-1"></th>
-      @for (player of scorekeeperForm.players; track player) {
+      @for (player of scorekeeperForm.players; track $index) {
         <th class="border p-1">
-          <input type="text" [formField]="player.name" class="text-center" />
+          <input
+            type="text"
+            [formField]="player.name"
+            [placeholder]="`Player ${$index + 1}`"
+            class="text-center"
+          />
         </th>
       }
     </thead>
@@ -17,7 +22,7 @@
               <input
                 type="number"
                 [formField]="player.score[i]"
-                (change)="scoreChange(i)"
+                (keydown)="scoreChange($event, i)"
                 placeholder="enter score"
                 class="w-full text-right"
               />
@@ -36,7 +41,8 @@
     </tbody>
   </table>
   <div class="ml-1">
-    <button (click)="addPlayer()" class="border p-1 cursor-pointer">Add Player</button>
+    <button (click)="addPlayer()" class="block border p-1 cursor-pointer">Add Player</button>
+    <button (click)="addRound()" class="mt-1 block border p-1 cursor-pointer">Add Row</button>
   </div>
 </div>
 
