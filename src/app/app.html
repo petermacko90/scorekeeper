@@ -2,19 +2,19 @@
   <table>
     <thead>
       <th class="border p-1"></th>
-      @for (player of scorekeeperForm.players; track $index) {
+      @for (player of scorekeeperForm.players; track player; let i = $index) {
         <th class="border p-1">
           <input
             type="text"
             [formField]="player.name"
-            [placeholder]="`Player ${$index + 1}`"
+            [placeholder]="`Player ${i + 1}`"
             class="text-center"
           />
         </th>
       }
     </thead>
     <tbody>
-      @for (round of scorekeeperForm.players[0].score; track $index; let i = $index) {
+      @for (round of scorekeeperForm.players[0].score; track round; let i = $index) {
         <tr>
           <td class="border p-1 text-right">{{ i + 1 }}.</td>
           @for (player of scorekeeperForm.players; track player) {
@@ -43,6 +43,7 @@
   <div class="ml-1">
     <button (click)="addPlayer()" class="block border p-1 cursor-pointer">Add Player</button>
     <button (click)="addRound()" class="mt-1 block border p-1 cursor-pointer">Add Row</button>
+    <button (click)="reset()" class="mt-1 block border p-1 cursor-pointer">Reset</button>
   </div>
 </div>
 
