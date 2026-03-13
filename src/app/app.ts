@@ -105,7 +105,7 @@ export class App implements OnInit {
     }
   }
 
-  isInitialState() {
+  isInitialState(): boolean {
     return (
       this.scorekeeperModel().players.length === 1 &&
       this.scorekeeperModel().players[0].name === '' &&
