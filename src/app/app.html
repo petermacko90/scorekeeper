@@ -1,5 +1,8 @@
-<div class="flex flex-row p-1">
-  <table>
+<div class="p-1">
+  <button (click)="addPlayer()" class="border p-1 cursor-pointer">Add Player</button>
+  <button (click)="addRound()" class="ml-1 border p-1 cursor-pointer">Add Row</button>
+  <button (click)="reset()" class="ml-1 border p-1 cursor-pointer">Reset</button>
+  <table class="mt-1">
     <thead>
       <th class="border p-1"></th>
       @for (player of scorekeeperForm.players; track player; let i = $index) {
@@ -40,11 +43,6 @@
       </tr>
     </tbody>
   </table>
-  <div class="ml-1">
-    <button (click)="addPlayer()" class="block border p-1 cursor-pointer">Add Player</button>
-    <button (click)="addRound()" class="mt-1 block border p-1 cursor-pointer">Add Row</button>
-    <button (click)="reset()" class="mt-1 block border p-1 cursor-pointer">Reset</button>
-  </div>
 </div>
 
 <router-outlet />
