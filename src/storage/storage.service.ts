@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ScorekeeperFormModel } from '../app/app';
+import { ScorekeeperFormModel } from '../scorekeeper/models';
 
 @Injectable({ providedIn: 'root' })
 export class StorageService {

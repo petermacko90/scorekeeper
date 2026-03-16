@@ -1,0 +1,13 @@
+input {
+  width: 120px;
+}
+
+/* remove arrows from number input in webkit browsers */
+input[type="number"]::-webkit-inner-spin-button {
+  display: none;
+}
+
+/* remove arrows from number input in Firefox */
+input[type="number"] {
+  -moz-appearance: textfield;
+}
