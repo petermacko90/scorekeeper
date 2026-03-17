@@ -19,11 +19,7 @@
             [class.w-24]="isEditMode()"
           />
           @if (isEditMode() && playersNumber() > 1) {
-            <sk-remove-button
-              [index]="i"
-              tooltip="Remove Player"
-              (action)="removePlayer(i)"
-            ></sk-remove-button>
+            <sk-remove-button tooltip="Remove Player" (action)="removePlayer(i)" />
           }
         </th>
       }
@@ -37,11 +33,7 @@
             [class.text-center]="isEditMode()"
           >
             @if (isEditMode()) {
-              <sk-remove-button
-                [index]="i"
-                tooltip="Remove Row"
-                (action)="removeRow(i)"
-              ></sk-remove-button>
+              <sk-remove-button tooltip="Remove Row" (action)="removeRow(i)" />
             }
             @if (!isEditMode()) {
               <span>{{ i + 1 }}.</span>

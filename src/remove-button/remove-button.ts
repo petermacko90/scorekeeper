@@ -5,8 +5,7 @@ import { Component, input, output } from '@angular/core';
   templateUrl: './remove-button.html',
 })
 export class RemoveButton {
-  index = input.required<number>();
   tooltip = input.required<string>();
 
-  action = output<number>();
+  action = output<void>();
 }
