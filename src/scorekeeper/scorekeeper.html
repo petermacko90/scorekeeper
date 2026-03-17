@@ -1,6 +1,9 @@
 <div class="p-1">
   <button (click)="addPlayer()" class="border p-1 cursor-pointer">Add Player</button>
-  <button (click)="addRound()" class="ml-1 border p-1 cursor-pointer">Add Row</button>
+  <button (click)="addRound()" class="ml-1 border p-1 cursor-pointer">Add Round</button>
+  <button (click)="toggleEditMode()" class="ml-1 border p-1 cursor-pointer">
+    {{ isEditMode() ? 'Exit Edit Mode' : 'Enter Edit Mode' }}
+  </button>
   <button (click)="reset()" class="ml-1 border p-1 cursor-pointer">Reset</button>
   <table class="mt-1">
     <thead>
@@ -10,16 +13,44 @@
           <input
             type="text"
             [formField]="player.name"
-            [placeholder]="`Player ${i + 1}`"
+            [placeholder]="getDefaultPlayerName(i)"
             class="text-center"
+            [class.full-input]="!isEditMode()"
+            [class.w-24]="isEditMode()"
           />
+          @if (isEditMode() && playersNumber() > 1) {
+            <button
+              (click)="removePlayer(i)"
+              title="Remove Player"
+              class="w-6 cursor-pointer font-bold bg-gray-200"
+            >
+              &times;
+            </button>
+          }
         </th>
       }
     </thead>
     <tbody>
       @for (round of scorekeeperForm.players[0].score; track round; let i = $index) {
         <tr>
-          <td class="border p-1 text-right">{{ i + 1 }}.</td>
+          <td
+            class="border p-1"
+            [class.text-right]="!isEditMode()"
+            [class.text-center]="isEditMode()"
+          >
+            @if (isEditMode()) {
+              <button
+                (click)="removeRow(i)"
+                title="Remove Row"
+                class="w-6 cursor-pointer font-bold bg-gray-200"
+              >
+                &times;
+              </button>
+            }
+            @if (!isEditMode()) {
+              <span>{{ i + 1 }}.</span>
+            }
+          </td>
           @for (player of scorekeeperForm.players; track player) {
             <td class="border p-1">
               <input
@@ -27,7 +58,7 @@
                 [formField]="player.score[i]"
                 (keydown)="scoreChange($event, i)"
                 placeholder="enter score"
-                class="w-full text-right"
+                class="text-right full-input"
               />
             </td>
           }

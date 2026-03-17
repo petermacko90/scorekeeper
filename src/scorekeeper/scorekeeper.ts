@@ -1,5 +1,6 @@
 import { Component, computed, effect, ElementRef, inject, OnInit, signal } from '@angular/core';
 import { debounce, form, FormField } from '@angular/forms/signals';
+import { v4 as uuidv4 } from 'uuid';
 import { StorageService } from '../storage/storage.service';
 import { ScorekeeperFormModel, Score } from './models';
 
@@ -13,7 +14,7 @@ export class Scorekeeper implements OnInit {
   private storage = inject(StorageService);
 
   private readonly initialState: ScorekeeperFormModel = {
-    players: [{ name: '', score: [null] }],
+    players: [{ id: uuidv4(), name: '', score: [null] }],
   };
 
   private scorekeeperModel = signal<ScorekeeperFormModel>(this.initialState);
@@ -23,6 +24,9 @@ export class Scorekeeper implements OnInit {
   });
 
   private roundsNumber = computed(() => this.scorekeeperForm.players[0].score.length);
+  playersNumber = computed(() => this.scorekeeperForm.players.length);
+
+  isEditMode = signal<boolean>(false);
 
   private elementRef: ElementRef<HTMLInputElement> = inject(ElementRef);
 
@@ -55,6 +59,7 @@ export class Scorekeeper implements OnInit {
         players: [
           ...data.players,
           {
+            id: uuidv4(),
             name: '',
             score: new Array(this.roundsNumber()).fill(null),
           },
@@ -65,6 +70,16 @@ export class Scorekeeper implements OnInit {
     setTimeout(() => {
       this.elementRef.nativeElement.querySelector<HTMLInputElement>('th:last-child>input')?.focus();
     });
+  }
+
+  removePlayer(index: number) {
+    if (confirm(`Are you sure you want to remove player "${this.getPlayerName(index)}"?`)) {
+      this.scorekeeperModel.update((data) => {
+        return {
+          players: [...data.players.slice(0, index), ...data.players.slice(index + 1)],
+        };
+      });
+    }
   }
 
   addRound() {
@@ -80,11 +95,38 @@ export class Scorekeeper implements OnInit {
     });
   }
 
+  removeRow(index: number) {
+    if (confirm(`Are you sure you want to remove the row number ${index + 1}?`)) {
+      this.scorekeeperModel.update((data) => {
+        return {
+          players: data.players.map((player) => {
+            return {
+              ...player,
+              score: [...player.score.slice(0, index), ...player.score.slice(index + 1)],
+            };
+          }),
+        };
+      });
+    }
+  }
+
+  toggleEditMode() {
+    this.isEditMode.update((value) => !value);
+  }
+
   reset() {
     if (this.isInitialState()) return;
     if (confirm('Are you sure you want to reset the scoreboard?')) {
       this.scorekeeperForm().reset(this.initialState);
     }
+  }
+
+  getPlayerName(index: number): string {
+    return this.scorekeeperModel().players[index].name || this.getDefaultPlayerName(index);
+  }
+
+  getDefaultPlayerName(index: number): string {
+    return `Player ${index + 1}`;
   }
 
   scoreChange(event: KeyboardEvent, index: number) {
