@@ -3,10 +3,11 @@ import { debounce, form, FormField } from '@angular/forms/signals';
 import { v4 as uuidv4 } from 'uuid';
 import { StorageService } from '../storage/storage.service';
 import { ScorekeeperFormModel, Score } from './models';
+import { RemoveButton } from '../remove-button/remove-button';
 
 @Component({
   selector: 'sk-scorekeeper',
-  imports: [FormField],
+  imports: [FormField, RemoveButton],
   templateUrl: './scorekeeper.html',
   styleUrl: './scorekeeper.css',
 })
