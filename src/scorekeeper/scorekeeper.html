@@ -1,10 +1,12 @@
 <div class="p-1">
-  <button (click)="addPlayer()" class="border p-1 cursor-pointer">Add Player</button>
-  <button (click)="addRound()" class="ml-1 border p-1 cursor-pointer">Add Round</button>
-  <button (click)="toggleEditMode()" class="ml-1 border p-1 cursor-pointer">
-    {{ isEditMode() ? 'Exit Edit Mode' : 'Enter Edit Mode' }}
-  </button>
-  <button (click)="reset()" class="ml-1 border p-1 cursor-pointer">Reset</button>
+  <div class="flex flex-row gap-1">
+    <button (click)="addPlayer()" class="border p-1 cursor-pointer">Add Player</button>
+    <button (click)="addRound()" class="border p-1 cursor-pointer">Add Round</button>
+    <button (click)="toggleEditMode()" class="border p-1 cursor-pointer">
+      {{ isEditMode() ? 'Exit Edit Mode' : 'Enter Edit Mode' }}
+    </button>
+    <button (click)="reset()" class="border p-1 cursor-pointer">Reset</button>
+  </div>
   <table class="mt-1 border-none border-separate border-spacing-0">
     <thead class="sticky top-0 z-10 bg-white">
       <th class="sticky left-0 bg-white border p-1"></th>
