@@ -96,7 +96,7 @@ export class Scorekeeper implements OnInit {
     });
   }
 
-  removeRow(index: number) {
+  removeRound(index: number) {
     if (confirm(`Are you sure you want to remove the row number ${index + 1}?`)) {
       this.scorekeeperModel.update((data) => {
         return {
