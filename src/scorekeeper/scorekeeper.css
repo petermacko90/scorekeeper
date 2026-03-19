@@ -9,5 +9,15 @@ input[type="number"] {
 }
 
 .full-input {
-  width: 7.5rem;
+  width: calc(var(--spacing) * 24 + var(--spacing) * 6);
+}
+
+.table-height {
+  height: calc(100dvh - var(--spacing) * 11);
+}
+
+@media(orientation: landscape) {
+  .table-height {
+    height: calc(100lvh - var(--spacing) * 11);
+  }
 }
