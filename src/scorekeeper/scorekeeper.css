@@ -15,9 +15,3 @@ input[type="number"] {
 .table-height {
   height: calc(100dvh - var(--spacing) * 11);
 }
-
-@media(orientation: landscape) {
-  .table-height {
-    height: calc(100lvh - var(--spacing) * 11);
-  }
-}
