@@ -58,9 +58,9 @@
     <tfoot>
       <tr class="sticky bottom-0 bg-white">
         <td class="sticky left-0 bg-white border p-1 font-bold">Sum</td>
-        @for (player of scorekeeperForm.players; track player) {
+        @for (player of scorekeeperForm.players; track player; let i = $index) {
           <td class="border p-1 font-bold text-right">
-            {{ calculateSum(player.score().value()) }}
+            {{ sums()[i] }}
           </td>
         }
       </tr>

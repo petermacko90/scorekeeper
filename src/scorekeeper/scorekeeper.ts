@@ -27,6 +27,15 @@ export class Scorekeeper implements OnInit {
   private roundsNumber = computed(() => this.scorekeeperForm.players[0].score.length);
   playersNumber = computed(() => this.scorekeeperForm.players.length);
 
+  sums = computed(() => {
+    return this.scorekeeperModel().players.map((player) => {
+      const sum = player.score.reduce((acc, curr) => {
+        return (acc ?? 0) + (curr ?? 0);
+      }, 0);
+      return sum ?? 0;
+    });
+  });
+
   isEditMode = signal<boolean>(false);
 
   private elementRef: ElementRef<HTMLInputElement> = inject(ElementRef);
@@ -45,13 +54,6 @@ export class Scorekeeper implements OnInit {
     const state = this.storage.load();
     if (state === null) return;
     this.scorekeeperModel.set(state);
-  }
-
-  protected calculateSum(score: Score): number {
-    const sum = score.reduce((acc, curr) => {
-      return (acc ?? 0) + (curr ?? 0);
-    }, 0);
-    return sum ?? 0;
   }
 
   addPlayer() {
