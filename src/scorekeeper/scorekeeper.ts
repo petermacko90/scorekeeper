@@ -2,7 +2,7 @@ import { Component, computed, effect, ElementRef, inject, OnInit, signal } from 
 import { debounce, form, FormField } from '@angular/forms/signals';
 import { v4 as uuidv4 } from 'uuid';
 import { StorageService } from '../storage/storage.service';
-import { ScorekeeperFormModel, Score } from './models';
+import { ScorekeeperFormModel } from './models';
 import { RemoveButton } from '../remove-button/remove-button';
 
 @Component({
@@ -28,12 +28,15 @@ export class Scorekeeper implements OnInit {
   playersNumber = computed(() => this.scorekeeperForm.players.length);
 
   sums = computed(() => {
-    return this.scorekeeperModel().players.map((player) => {
-      const sum = player.score.reduce((acc, curr) => {
-        return (acc ?? 0) + (curr ?? 0);
-      }, 0);
-      return sum ?? 0;
-    });
+    return this.scorekeeperForm
+      .players()
+      .value()
+      .map((player) => {
+        const sum = player.score.reduce((acc, curr) => {
+          return (acc ?? 0) + (curr ?? 0);
+        }, 0);
+        return sum ?? 0;
+      });
   });
 
   isEditMode = signal<boolean>(false);

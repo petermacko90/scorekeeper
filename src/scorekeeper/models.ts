@@ -1,4 +1,4 @@
-export type Score = Array<number | null>;
+type Score = Array<number | null>;
 
 interface PlayerFormModel {
   id: string;
