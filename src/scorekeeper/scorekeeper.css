@@ -15,3 +15,7 @@ input[type="number"] {
 .table-height {
   height: calc(100dvh - var(--spacing) * 11);
 }
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
