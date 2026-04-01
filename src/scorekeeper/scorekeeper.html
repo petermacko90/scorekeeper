@@ -1,22 +1,22 @@
-<div class="w-full flex flex-row gap-1 h-11 p-1 overflow-x-scroll whitespace-nowrap no-scrollbar">
-  <button (click)="addPlayer()" class="border p-1 cursor-pointer">Add Player</button>
-  <button (click)="addRound()" class="border p-1 cursor-pointer">Add Round</button>
-  <button (click)="toggleEditMode()" class="border p-1 cursor-pointer">
+<div class="w-full h-11 flex flex-row gap-1 p-1 overflow-x-scroll whitespace-nowrap no-scrollbar">
+  <button (click)="addPlayer()" class="px-1 bg-gray-200 cursor-pointer">Add Player</button>
+  <button (click)="addRound()" class="px-1 bg-gray-200 cursor-pointer">Add Round</button>
+  <button (click)="toggleEditMode()" class="px-1 bg-gray-200 cursor-pointer">
     {{ isEditMode() ? 'Exit Edit Mode' : 'Enter Edit Mode' }}
   </button>
-  <button (click)="reset()" class="border p-1 cursor-pointer">Reset</button>
+  <button (click)="reset()" class="px-1 bg-gray-200 cursor-pointer">Reset</button>
 </div>
 <div class="overflow-auto table-height">
-  <table class="pl-1 pr-1 pb-1 border-none border-separate border-spacing-0">
-    <thead class="sticky top-0 z-10 bg-white">
-      <th class="sticky left-0 bg-white border p-1"></th>
+  <table class="border-none border-separate border-spacing-0">
+    <thead class="sticky top-0 z-10">
+      <th class="sticky left-0 bg-gray-200 border border-white p-1"></th>
       @for (player of scorekeeperForm.players; track player; let i = $index) {
-        <th class="border p-1">
+        <th class="border border-white bg-gray-200">
           <input
             type="text"
             [formField]="player.name"
             [placeholder]="getDefaultPlayerName(i)"
-            class="text-center"
+            class="p-1 text-center"
             [class.full-input]="!isEditMode()"
             [class.w-24]="isEditMode()"
           />
@@ -30,25 +30,25 @@
       @for (round of scorekeeperForm.players[0].score; track round; let i = $index) {
         <tr>
           <td
-            class="sticky left-0 bg-white border p-1"
+            class="sticky left-0 p-1 bg-gray-200 border border-white"
             [class.text-right]="!isEditMode()"
             [class.text-center]="isEditMode()"
           >
             @if (isEditMode()) {
-              <sk-remove-button tooltip="Remove Row" (action)="removeRound(i)" />
+              <sk-remove-button tooltip="Remove Round" (action)="removeRound(i)" />
             }
             @if (!isEditMode()) {
-              <span>{{ i + 1 }}.</span>
+              <span class="font-bold">{{ i + 1 }}.</span>
             }
           </td>
           @for (player of scorekeeperForm.players; track player) {
-            <td class="border p-1">
+            <td class="border border-white bg-gray-100">
               <input
                 type="number"
                 [formField]="player.score[i]"
                 (keydown)="scoreChange($event, i)"
                 placeholder="enter score"
-                class="text-right full-input"
+                class="p-1 text-right full-input"
               />
             </td>
           }
@@ -56,10 +56,10 @@
       }
     </tbody>
     <tfoot>
-      <tr class="sticky bottom-0 bg-white">
-        <td class="sticky left-0 bg-white border p-1 font-bold">Sum</td>
+      <tr class="sticky bottom-0">
+        <td class="sticky left-0 p-1 bg-gray-200 border border-white font-bold">Sum</td>
         @for (player of scorekeeperForm.players; track player; let i = $index) {
-          <td class="border p-1 font-bold text-right">
+          <td class="p-1 border border-white bg-gray-200 font-bold text-right">
             {{ sums()[i] }}
           </td>
         }
