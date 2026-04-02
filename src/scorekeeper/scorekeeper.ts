@@ -4,10 +4,11 @@ import { v4 as uuidv4 } from 'uuid';
 import { StorageService } from '../storage/storage.service';
 import { ScorekeeperFormModel } from './models';
 import { RemoveButton } from '../remove-button/remove-button';
+import { Button } from '../button/button';
 
 @Component({
   selector: 'sk-scorekeeper',
-  imports: [FormField, RemoveButton],
+  imports: [FormField, RemoveButton, Button],
   templateUrl: './scorekeeper.html',
   styleUrl: './scorekeeper.css',
 })

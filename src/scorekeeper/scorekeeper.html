@@ -1,10 +1,11 @@
 <div class="w-full h-11 flex flex-row gap-1 p-1 overflow-x-scroll whitespace-nowrap no-scrollbar">
-  <button (click)="addPlayer()" class="px-1 bg-gray-200 cursor-pointer">Add Player</button>
-  <button (click)="addRound()" class="px-1 bg-gray-200 cursor-pointer">Add Round</button>
-  <button (click)="toggleEditMode()" class="px-1 bg-gray-200 cursor-pointer">
-    {{ isEditMode() ? 'Exit Edit Mode' : 'Enter Edit Mode' }}
-  </button>
-  <button (click)="reset()" class="px-1 bg-gray-200 cursor-pointer">Reset</button>
+  <sk-button text="Add Player" (action)="addPlayer()" />
+  <sk-button text="Add Round" (action)="addRound()" />
+  <sk-button
+    [text]="isEditMode() ? 'Exit Edit Mode' : 'Enter Edit Mode'"
+    (action)="toggleEditMode()"
+  />
+  <sk-button text="Reset" (action)="reset()" />
 </div>
 <div class="overflow-auto table-height">
   <table class="border-none border-separate border-spacing-0">
@@ -35,7 +36,7 @@
             [class.text-center]="isEditMode()"
           >
             @if (isEditMode()) {
-              <sk-remove-button tooltip="Remove Round" (action)="removeRound(i)" />
+              <sk-remove-button [tooltip]="`Remove Round ${i + 1}`" (action)="removeRound(i)" />
             }
             @if (!isEditMode()) {
               <span class="font-bold">{{ i + 1 }}.</span>
