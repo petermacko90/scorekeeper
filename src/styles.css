@@ -1,3 +1,30 @@
 /* You can add global styles to this file, and also import other style files */
 
 @import 'tailwindcss';
+
+@theme {
+  --color-polar-night-1: #2e3440;
+  --color-polar-night-2: #3b4252;
+  --color-polar-night-3: #434c5e;
+  --color-polar-night-4: #4c566a;
+
+  --color-snow-storm-1: #d8dee9;
+  --color-snow-storm-2: #e5e9f0;
+  --color-snow-storm-3: #eceff4;
+
+  --color-frost-1: #8fbcbb;
+  --color-frost-2: #88c0d0;
+  --color-frost-3: #81a1c1;
+  --color-frost-4: #5e81ac;
+
+  --color-aurora-red: #bf616a;
+  --color-aurora-orange: #d08770;
+  --color-aurora-yellow: #ebcb8b;
+  --color-aurora-green: #a3be8c;
+  --color-aurora-purple: #b48ead;
+}
+
+html,
+body {
+  @apply bg-snow-storm-3 dark:bg-polar-night-1;
+}
