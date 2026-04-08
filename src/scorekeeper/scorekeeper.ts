@@ -42,7 +42,8 @@ export class Scorekeeper implements OnInit {
 
   isEditMode = signal<boolean>(false);
 
-  private elementRef: ElementRef<HTMLInputElement> = inject(ElementRef);
+  private lastPlayerRef: ElementRef<HTMLInputElement> = inject(ElementRef);
+  private lastRoundRef: ElementRef<HTMLTableRowElement> = inject(ElementRef);
 
   constructor() {
     effect(() => {
@@ -75,7 +76,9 @@ export class Scorekeeper implements OnInit {
     });
 
     setTimeout(() => {
-      this.elementRef.nativeElement.querySelector<HTMLInputElement>('th:last-child>input')?.focus();
+      this.lastPlayerRef.nativeElement
+        .querySelector<HTMLInputElement>('th:last-child>input')
+        ?.focus();
     });
   }
 
@@ -99,6 +102,10 @@ export class Scorekeeper implements OnInit {
           };
         }),
       };
+    });
+
+    setTimeout(() => {
+      this.lastRoundRef.nativeElement.querySelector('tbody>tr:last-child')?.scrollIntoView();
     });
   }
 
