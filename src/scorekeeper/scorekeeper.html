@@ -9,14 +9,10 @@
 </div>
 <div class="overflow-auto table-height">
   <table class="border-none border-separate border-spacing-0">
-    <thead class="sticky top-0 z-10">
-      <th
-        class="sticky left-0 p-1 bg-snow-storm-1 dark:bg-polar-night-3 border border-snow-storm-3 dark:border-polar-night-1"
-      ></th>
+    <thead class="sticky top-0 z-10 bg-snow-storm-1 dark:bg-polar-night-3">
+      <th class="sticky left-0 p-1 border border-snow-storm-3 dark:border-polar-night-1"></th>
       @for (player of scorekeeperForm.players; track player; let i = $index) {
-        <th
-          class="bg-snow-storm-1 dark:bg-polar-night-3 border border-snow-storm-3 dark:border-polar-night-1"
-        >
+        <th class="border border-snow-storm-3 dark:border-polar-night-1">
           <input
             type="text"
             [formField]="player.name"
@@ -63,15 +59,15 @@
       }
     </tbody>
     <tfoot>
-      <tr class="sticky bottom-0">
+      <tr class="sticky bottom-0 bg-snow-storm-1 dark:bg-polar-night-3">
         <td
-          class="sticky left-0 p-1 bg-snow-storm-1 dark:bg-polar-night-3 border border-snow-storm-3 dark:border-polar-night-1 text-polar-night-1 dark:text-snow-storm-3 font-bold"
+          class="sticky left-0 p-1 border border-snow-storm-3 dark:border-polar-night-1 text-polar-night-1 dark:text-snow-storm-3 font-bold"
         >
           Sum
         </td>
         @for (player of scorekeeperForm.players; track player; let i = $index) {
           <td
-            class="p-1 bg-snow-storm-1 dark:bg-polar-night-3 border border-snow-storm-3 dark:border-polar-night-1 text-polar-night-1 dark:text-snow-storm-3 font-bold text-right"
+            class="p-1 border border-snow-storm-3 dark:border-polar-night-1 text-polar-night-1 dark:text-snow-storm-3 font-bold text-right"
           >
             {{ sums()[i] }}
           </td>
