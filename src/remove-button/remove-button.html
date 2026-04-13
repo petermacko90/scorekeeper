@@ -1,7 +1,7 @@
 <button
   (click)="action.emit()"
   [title]="tooltip()"
-  class="w-6 bg-aurora-red text-snow-storm-3 hover:opacity-75 active:opacity-50 font-bold cursor-pointer"
+  class="w-6 h-6 hover:opacity-75 active:opacity-50 cursor-pointer"
 >
-  &times;
+  <span class="material-symbols-outlined align-middle text-aurora-red">{{ icon() }}</span>
 </button>

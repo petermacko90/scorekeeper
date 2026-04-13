@@ -1,11 +1,12 @@
 <div class="w-full h-11 flex flex-row gap-1 p-1 overflow-x-scroll whitespace-nowrap no-scrollbar">
-  <sk-button text="Add Player" (action)="addPlayer()" />
-  <sk-button text="Add Round" (action)="addRound()" />
+  <sk-button text="Add Player" icon="person_add" (action)="addPlayer()" />
+  <sk-button text="Add Round" icon="add_row_below" (action)="addRound()" />
   <sk-button
     [text]="isEditMode() ? 'Exit Edit Mode' : 'Enter Edit Mode'"
+    [icon]="isEditMode() ? 'edit_off' : 'edit'"
     (action)="toggleEditMode()"
   />
-  <sk-button text="Reset" (action)="reset()" />
+  <sk-button text="Reset" icon="delete_forever" type="danger" (action)="reset()" />
 </div>
 <div class="overflow-auto table-height">
   <table class="border-none border-separate border-spacing-0">
@@ -22,7 +23,11 @@
             [class.w-24]="isEditMode()"
           />
           @if (isEditMode() && playersNumber() > 1) {
-            <sk-remove-button tooltip="Remove Player" (action)="removePlayer(i)" />
+            <sk-remove-button
+              tooltip="Remove Player"
+              icon="person_remove"
+              (action)="removePlayer(i)"
+            />
           }
         </th>
       }
@@ -31,9 +36,7 @@
       @for (round of scorekeeperForm.players[0].score; track round; let i = $index) {
         <tr>
           <td
-            class="sticky left-0 p-1 bg-snow-storm-1 dark:bg-polar-night-3 border border-snow-storm-3 dark:border-polar-night-1"
-            [class.text-right]="!isEditMode()"
-            [class.text-center]="isEditMode()"
+            class="sticky left-0 p-1 bg-snow-storm-1 dark:bg-polar-night-3 border border-snow-storm-3 dark:border-polar-night-1 text-right"
           >
             @if (isEditMode()) {
               <sk-remove-button [tooltip]="`Remove Round ${i + 1}`" (action)="removeRound(i)" />

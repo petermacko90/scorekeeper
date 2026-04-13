@@ -1,6 +1,9 @@
 <button
   (click)="action.emit()"
-  class="h-full px-1.5 bg-frost-1 hover:opacity-75 active:opacity-50 text-polar-night-1 font-bold rounded-sm cursor-pointer"
+  [title]="text()"
+  class="h-full px-1.5 hover:opacity-75 active:opacity-50 text-polar-night-1 font-bold rounded-sm cursor-pointer"
+  [class.bg-frost-1]="type() === 'default'"
+  [class.bg-aurora-red]="type() === 'danger'"
 >
-  {{ text() }}
+  <span class="material-symbols-outlined align-middle">{{ icon() }}</span>
 </button>

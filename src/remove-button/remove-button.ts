@@ -6,6 +6,7 @@ import { Component, input, output } from '@angular/core';
 })
 export class RemoveButton {
   tooltip = input.required<string>();
+  icon = input<string>('delete');
 
   action = output<void>();
 }
