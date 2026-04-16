@@ -7,7 +7,8 @@ import { Component, input, output } from '@angular/core';
 export class Button {
   text = input.required<string>();
   icon = input.required<string>();
-  type = input<'default' | 'danger'>('default');
+  type = input<'default' | 'positive' | 'danger'>('default');
+  disabled = input<boolean>();
 
   action = output<void>();
 }

@@ -33,6 +33,19 @@ export class StateService {
       });
   });
 
+  prevState = signal<ScorekeeperFormModel | null>(null);
+
+  undo() {
+    if (this.isUndoEnabled()) {
+      this.scorekeeperModel.set(this.prevState()!);
+      this.prevState.set(null);
+    }
+  }
+
+  isUndoEnabled(): boolean {
+    return this.prevState() !== null;
+  }
+
   loadState() {
     const state = this.storage.load();
     if (state === null) return;
@@ -61,13 +74,13 @@ export class StateService {
   }
 
   removePlayer(index: number) {
-    if (confirm(`Are you sure you want to remove player "${this.getPlayerName(index)}"?`)) {
-      this.scorekeeperModel.update((data) => {
-        return {
-          players: [...data.players.slice(0, index), ...data.players.slice(index + 1)],
-        };
-      });
-    }
+    this.prevState.set(this.scorekeeperModel());
+
+    this.scorekeeperModel.update((data) => {
+      return {
+        players: [...data.players.slice(0, index), ...data.players.slice(index + 1)],
+      };
+    });
   }
 
   addRound() {
@@ -84,36 +97,31 @@ export class StateService {
   }
 
   removeRound(index: number) {
-    if (confirm(`Are you sure you want to remove the row number ${index + 1}?`)) {
-      this.scorekeeperModel.update((data) => {
-        return {
-          players: data.players.map((player) => {
-            return {
-              ...player,
-              score: [...player.score.slice(0, index), ...player.score.slice(index + 1)],
-            };
-          }),
-        };
-      });
-    }
+    this.prevState.set(this.scorekeeperModel());
+
+    this.scorekeeperModel.update((data) => {
+      return {
+        players: data.players.map((player) => {
+          return {
+            ...player,
+            score: [...player.score.slice(0, index), ...player.score.slice(index + 1)],
+          };
+        }),
+      };
+    });
   }
 
   reset() {
-    if (this.isInitialState()) return;
-    if (confirm('Are you sure you want to reset the scoreboard?')) {
-      this.scorekeeperForm().reset(this.initialState);
-    }
-  }
+    this.prevState.set(this.scorekeeperModel());
 
-  private getPlayerName(index: number): string {
-    return this.scorekeeperModel().players[index].name || this.getDefaultPlayerName(index);
+    this.scorekeeperForm().reset(this.initialState);
   }
 
   getDefaultPlayerName(index: number): string {
     return `Player ${index + 1}`;
   }
 
-  private isInitialState(): boolean {
+  isInitialState(): boolean {
     return (
       this.scorekeeperModel().players.length === 1 &&
       this.scorekeeperModel().players[0].name === '' &&

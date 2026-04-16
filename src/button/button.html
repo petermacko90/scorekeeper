@@ -1,9 +1,14 @@
 <button
   (click)="action.emit()"
   [title]="text()"
-  class="h-full px-1.5 hover:opacity-75 active:opacity-50 text-polar-night-1 font-bold rounded-sm cursor-pointer"
+  [disabled]="disabled()"
+  class="h-full px-1.5 hover:opacity-75 active:opacity-50 text-polar-night-1 font-bold rounded-sm"
   [class.bg-frost-1]="type() === 'default'"
   [class.bg-aurora-red]="type() === 'danger'"
+  [class.bg-aurora-green]="type() === 'positive'"
+  [class.opacity-50]="disabled()"
+  [class.cursor-pointer]="!disabled()"
+  [class.cursor-not-allowed]="disabled()"
 >
   <span class="material-symbols-outlined align-middle">{{ icon() }}</span>
 </button>

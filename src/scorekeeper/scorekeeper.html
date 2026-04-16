@@ -1,12 +1,19 @@
 <div class="w-full h-11 flex flex-row gap-1 p-1 overflow-x-scroll whitespace-nowrap no-scrollbar">
-  <sk-button text="Add Player" icon="person_add" (action)="addPlayer()" />
-  <sk-button text="Add Round" icon="add_row_below" (action)="addRound()" />
+  <sk-button text="Add Player" icon="person_add" type="positive" (action)="addPlayer()" />
+  <sk-button text="Add Round" icon="add_row_below" type="positive" (action)="addRound()" />
   <sk-button
     [text]="isEditMode() ? 'Exit Edit Mode' : 'Enter Edit Mode'"
     [icon]="isEditMode() ? 'edit_off' : 'edit'"
     (action)="toggleEditMode()"
   />
-  <sk-button text="Reset" icon="delete_forever" type="danger" (action)="state.reset()" />
+  <sk-button text="Undo" icon="undo" (action)="state.undo()" [disabled]="!state.isUndoEnabled()" />
+  <sk-button
+    text="Reset"
+    icon="delete_forever"
+    type="danger"
+    (action)="state.reset()"
+    [disabled]="state.isInitialState()"
+  />
 </div>
 <div class="overflow-auto table-height">
   <table class="border-none border-separate border-spacing-0">
