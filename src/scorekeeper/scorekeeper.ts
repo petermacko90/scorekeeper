@@ -40,7 +40,9 @@ export class Scorekeeper implements OnInit {
     this.state.addRound();
 
     setTimeout(() => {
-      this.lastRoundRef.nativeElement.querySelector('tbody>tr:last-child')?.scrollIntoView();
+      this.lastRoundRef.nativeElement
+        .querySelector('tbody>tr:last-child')
+        ?.scrollIntoView({ block: 'center', behavior: 'smooth' });
     });
   }
 
