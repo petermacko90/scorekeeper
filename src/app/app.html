@@ -1,2 +1,8 @@
-<sk-actions [(isEditMode)]="isEditMode"></sk-actions>
-<sk-scoreboard [(isEditMode)]="isEditMode"></sk-scoreboard>
+<div
+  class="flex"
+  [class.flex-col]="actionsPosition() === 'top'"
+  [class.flex-col-reverse]="actionsPosition() === 'bottom'"
+>
+  <sk-actions [(isEditMode)]="isEditMode" [(actionsPosition)]="actionsPosition" />
+  <sk-scoreboard [(isEditMode)]="isEditMode" />
+</div>

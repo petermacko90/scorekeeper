@@ -9,3 +9,6 @@ interface PlayerFormModel {
 export interface ScorekeeperFormModel {
   players: PlayerFormModel[];
 }
+
+export const actionsPositions = ['top', 'bottom'] as const;
+export type ActionsPosition = (typeof actionsPositions)[number];

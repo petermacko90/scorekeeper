@@ -16,4 +16,10 @@
     (action)="state.reset()"
     [disabled]="state.isInitialState()"
   />
+
+  <sk-button
+    [text]="actionsPosition() === 'top' ? 'Move To Bottom' : 'Move To Top'"
+    [icon]="actionsPosition() === 'top' ? 'vertical_align_bottom' : 'vertical_align_top'"
+    (action)="toggleActionsPosition()"
+  />
 </div>

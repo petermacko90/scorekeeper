@@ -2,6 +2,8 @@ import { Component, inject, model } from '@angular/core';
 import { Button } from '../button/button';
 import { StateService } from '../state/state.service';
 import { UndoService } from '../state/undo.service';
+import { ActionsPosition } from '../models/models';
+import { StorageService } from '../storage/storage.service';
 
 @Component({
   selector: 'sk-actions',
@@ -11,13 +13,25 @@ import { UndoService } from '../state/undo.service';
 })
 export class Actions {
   state = inject(StateService);
-
+  storage = inject(StorageService);
   undoService = inject(UndoService);
 
   isEditMode = model.required<boolean>();
+  actionsPosition = model.required<ActionsPosition>();
 
   toggleEditMode() {
     this.isEditMode.update((value) => !value);
+  }
+
+  toggleActionsPosition() {
+    const position = this.actionsPosition();
+    if (position === 'bottom') {
+      this.actionsPosition.set('top');
+      this.storage.saveActionsPosition('top');
+    } else {
+      this.actionsPosition.set('bottom');
+      this.storage.saveActionsPosition('bottom');
+    }
   }
 
   undo() {
