@@ -1,21 +1,17 @@
 /* remove arrows from number input in webkit browsers */
-input[type="number"]::-webkit-inner-spin-button {
+input[type='number']::-webkit-inner-spin-button {
   display: none;
 }
 
 /* remove arrows from number input in Firefox */
-input[type="number"] {
+input[type='number'] {
   -moz-appearance: textfield;
 }
 
-.full-input {
+.sk-full-input {
   width: calc(var(--spacing) * 24 + var(--spacing) * 6);
 }
 
-.table-height {
+.sk-table-height {
   height: calc(100dvh - var(--spacing) * 11);
-}
-
-.no-scrollbar::-webkit-scrollbar {
-  display: none;
 }

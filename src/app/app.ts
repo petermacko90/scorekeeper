@@ -1,10 +1,13 @@
-import { Component } from '@angular/core';
-import { Scorekeeper } from '../scorekeeper/scorekeeper';
+import { Component, signal } from '@angular/core';
+import { Scoreboard } from '../scoreboard/scoreboard';
+import { Actions } from '../actions/actions';
 
 @Component({
   selector: 'app-root',
-  imports: [Scorekeeper],
+  imports: [Scoreboard, Actions],
   templateUrl: './app.html',
   styleUrl: './app.css',
 })
-export class App {}
+export class App {
+  isEditMode = signal<boolean>(false);
+}

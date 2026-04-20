@@ -1,21 +1,4 @@
-<div class="w-full h-11 flex flex-row gap-1 p-1 overflow-x-scroll whitespace-nowrap no-scrollbar">
-  <sk-button text="Add Player" icon="person_add" type="positive" (action)="addPlayer()" />
-  <sk-button text="Add Round" icon="add_row_below" type="positive" (action)="addRound()" />
-  <sk-button
-    [text]="isEditMode() ? 'Exit Edit Mode' : 'Enter Edit Mode'"
-    [icon]="isEditMode() ? 'edit_off' : 'edit'"
-    (action)="toggleEditMode()"
-  />
-  <sk-button text="Undo" icon="undo" (action)="state.undo()" [disabled]="!state.isUndoEnabled()" />
-  <sk-button
-    text="Reset"
-    icon="delete_forever"
-    type="danger"
-    (action)="state.reset()"
-    [disabled]="state.isInitialState()"
-  />
-</div>
-<div class="overflow-auto table-height">
+<div class="overflow-auto sk-table-height">
   <table class="border-none border-separate border-spacing-0">
     <thead class="sticky top-0 z-10">
       <th
@@ -30,7 +13,7 @@
             [formField]="player.name"
             [placeholder]="state.getDefaultPlayerName(i)"
             class="p-1 text-center text-polar-night-1 dark:text-snow-storm-3 placeholder:text-polar-night-4 dark:placeholder:text-snow-storm-3"
-            [class.full-input]="!isEditMode()"
+            [class.sk-full-input]="!isEditMode()"
             [class.w-24]="isEditMode()"
           />
           @if (isEditMode() && state.playersNumber() > 1) {
@@ -68,7 +51,7 @@
                 [formField]="player.score[i]"
                 (keydown)="scoreChange($event, i)"
                 placeholder="enter score"
-                class="p-1 text-right full-input text-polar-night-1 dark:text-snow-storm-3 placeholder:text-polar-night-4 dark:placeholder:text-snow-storm-3"
+                class="p-1 text-right text-polar-night-1 dark:text-snow-storm-3 placeholder:text-polar-night-4 dark:placeholder:text-snow-storm-3 sk-full-input"
               />
             </td>
           }
