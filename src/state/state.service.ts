@@ -3,10 +3,13 @@ import { v4 as uuidv4 } from 'uuid';
 import { ScorekeeperFormModel } from '../models/models';
 import { debounce, form } from '@angular/forms/signals';
 import { StorageService } from '../storage/storage.service';
+import { UndoService } from './undo.service';
 
 @Injectable({ providedIn: 'root' })
 export class StateService {
   private storage = inject(StorageService);
+
+  private undoService = inject(UndoService);
 
   private readonly initialState: ScorekeeperFormModel = {
     players: [{ id: uuidv4(), name: '', score: [null] }],
@@ -33,23 +36,14 @@ export class StateService {
       });
   });
 
-  prevState = signal<ScorekeeperFormModel | null>(null);
-
-  undo() {
-    if (this.isUndoEnabled()) {
-      this.scorekeeperModel.set(this.prevState()!);
-      this.prevState.set(null);
-    }
-  }
-
-  isUndoEnabled(): boolean {
-    return this.prevState() !== null;
+  setState(state: ScorekeeperFormModel) {
+    this.scorekeeperModel.set(state);
   }
 
   loadState() {
     const state = this.storage.load();
     if (state === null) return;
-    this.scorekeeperModel.set(state);
+    this.setState(state);
   }
 
   saveState() {
@@ -59,6 +53,8 @@ export class StateService {
   }
 
   addPlayer() {
+    this.undoService.clearPrevState();
+
     this.scorekeeperModel.update((data) => {
       return {
         players: [
@@ -74,7 +70,7 @@ export class StateService {
   }
 
   removePlayer(index: number) {
-    this.prevState.set(this.scorekeeperModel());
+    this.undoService.setPrevState(this.scorekeeperModel());
 
     this.scorekeeperModel.update((data) => {
       return {
@@ -84,6 +80,8 @@ export class StateService {
   }
 
   addRound() {
+    this.undoService.clearPrevState();
+
     this.scorekeeperModel.update((data) => {
       return {
         players: data.players.map((player) => {
@@ -97,7 +95,7 @@ export class StateService {
   }
 
   removeRound(index: number) {
-    this.prevState.set(this.scorekeeperModel());
+    this.undoService.setPrevState(this.scorekeeperModel());
 
     this.scorekeeperModel.update((data) => {
       return {
@@ -112,13 +110,9 @@ export class StateService {
   }
 
   reset() {
-    this.prevState.set(this.scorekeeperModel());
+    this.undoService.setPrevState(this.scorekeeperModel());
 
     this.scorekeeperForm().reset(this.initialState);
-  }
-
-  getDefaultPlayerName(index: number): string {
-    return `Player ${index + 1}`;
   }
 
   isInitialState(): boolean {

@@ -8,7 +8,7 @@
     [icon]="isEditMode() ? 'edit_off' : 'edit'"
     (action)="toggleEditMode()"
   />
-  <sk-button text="Undo" icon="undo" (action)="state.undo()" [disabled]="!state.isUndoEnabled()" />
+  <sk-button text="Undo" icon="undo" (action)="undo()" [disabled]="!undoService.isUndoEnabled()" />
   <sk-button
     text="Reset"
     icon="delete_forever"
