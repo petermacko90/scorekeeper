@@ -16,7 +16,7 @@ export class App implements OnInit {
   isEditMode = signal<boolean>(false);
   actionsPosition = signal<ActionsPosition>('top');
 
-  scoreboard = viewChild(Scoreboard);
+  scoreboard = viewChild.required(Scoreboard);
 
   ngOnInit(): void {
     this.loadActionsPosition();
@@ -30,7 +30,7 @@ export class App implements OnInit {
   focusLastPlayer() {
     setTimeout(() => {
       this.scoreboard()
-        ?.lastPlayerRef.nativeElement.querySelector<HTMLInputElement>('th:last-child>input')
+        .lastPlayerRef.nativeElement.querySelector<HTMLInputElement>('th:last-child>input')
         ?.focus();
     });
   }
@@ -38,7 +38,7 @@ export class App implements OnInit {
   scrollToLastRound() {
     setTimeout(() => {
       this.scoreboard()
-        ?.lastRoundRef.nativeElement.querySelector('tbody>tr:last-child')
+        .lastRoundRef.nativeElement.querySelector('tbody>tr:last-child')
         ?.scrollIntoView({ block: 'center', behavior: 'smooth' });
     });
   }
