@@ -3,6 +3,11 @@
   [class.flex-col]="actionsPosition() === 'top'"
   [class.flex-col-reverse]="actionsPosition() === 'bottom'"
 >
-  <sk-actions [(isEditMode)]="isEditMode" [(actionsPosition)]="actionsPosition" />
+  <sk-actions
+    [(isEditMode)]="isEditMode"
+    [(actionsPosition)]="actionsPosition"
+    (playerAdded)="focusLastPlayer()"
+    (roundAdded)="scrollToLastRound()"
+  />
   <sk-scoreboard [(isEditMode)]="isEditMode" />
 </div>

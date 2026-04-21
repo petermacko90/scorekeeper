@@ -1,8 +1,8 @@
 <div
   class="w-full h-11 flex flex-row gap-1 p-1 overflow-x-scroll whitespace-nowrap sk-no-scrollbar"
 >
-  <sk-button text="Add Player" icon="person_add" type="positive" (action)="state.addPlayer()" />
-  <sk-button text="Add Round" icon="add_row_below" type="positive" (action)="state.addRound()" />
+  <sk-button text="Add Player" icon="person_add" type="positive" (action)="addPlayer()" />
+  <sk-button text="Add Round" icon="add_row_below" type="positive" (action)="addRound()" />
   <sk-button
     [text]="isEditMode() ? 'Exit Edit Mode' : 'Enter Edit Mode'"
     [icon]="isEditMode() ? 'edit_off' : 'edit'"

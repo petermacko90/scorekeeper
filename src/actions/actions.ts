@@ -1,4 +1,4 @@
-import { Component, inject, model } from '@angular/core';
+import { Component, inject, model, output } from '@angular/core';
 import { Button } from '../button/button';
 import { StateService } from '../state/state.service';
 import { UndoService } from '../state/undo.service';
@@ -18,6 +18,19 @@ export class Actions {
 
   isEditMode = model.required<boolean>();
   actionsPosition = model.required<ActionsPosition>();
+
+  playerAdded = output<void>();
+  roundAdded = output<void>();
+
+  addPlayer() {
+    this.state.addPlayer();
+    this.playerAdded.emit();
+  }
+
+  addRound() {
+    this.state.addRound();
+    this.roundAdded.emit();
+  }
 
   toggleEditMode() {
     this.isEditMode.update((value) => !value);
