@@ -13,6 +13,7 @@ export class StateService {
 
   private readonly initialState: ScorekeeperFormModel = {
     players: [{ id: uuidv4(), name: '', score: [null] }],
+    notes: '',
   };
 
   private scorekeeperModel = signal<ScorekeeperFormModel>(this.initialState);
@@ -23,6 +24,8 @@ export class StateService {
 
   roundsNumber = computed(() => this.scorekeeperForm.players[0].score.length);
   playersNumber = computed(() => this.scorekeeperForm.players.length);
+
+  notes = computed(() => this.scorekeeperModel().notes);
 
   sums = computed(() => {
     return this.scorekeeperForm
@@ -57,6 +60,7 @@ export class StateService {
 
     this.scorekeeperModel.update((data) => {
       return {
+        ...data,
         players: [
           ...data.players,
           {
@@ -74,6 +78,7 @@ export class StateService {
 
     this.scorekeeperModel.update((data) => {
       return {
+        ...data,
         players: [...data.players.slice(0, index), ...data.players.slice(index + 1)],
       };
     });
@@ -84,6 +89,7 @@ export class StateService {
 
     this.scorekeeperModel.update((data) => {
       return {
+        ...data,
         players: data.players.map((player) => {
           return {
             ...player,
@@ -99,6 +105,7 @@ export class StateService {
 
     this.scorekeeperModel.update((data) => {
       return {
+        ...data,
         players: data.players.map((player) => {
           return {
             ...player,
@@ -120,7 +127,8 @@ export class StateService {
       this.scorekeeperModel().players.length === 1 &&
       this.scorekeeperModel().players[0].name === '' &&
       this.scorekeeperModel().players[0].score.length === 1 &&
-      this.scorekeeperModel().players[0].score[0] === null
+      this.scorekeeperModel().players[0].score[0] === null &&
+      this.scorekeeperModel().notes === ''
     );
   }
 }

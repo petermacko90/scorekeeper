@@ -1,13 +1,14 @@
-import { Component, inject, model, output } from '@angular/core';
+import { Component, inject, model, output, viewChild } from '@angular/core';
 import { Button } from '../button/button';
 import { StateService } from '../state/state.service';
 import { UndoService } from '../state/undo.service';
 import { ActionsPosition } from '../models/models';
 import { StorageService } from '../storage/storage.service';
+import { Notes } from '../notes/notes';
 
 @Component({
   selector: 'sk-actions',
-  imports: [Button],
+  imports: [Button, Notes],
   templateUrl: './actions.html',
   styleUrl: './actions.css',
 })
@@ -21,6 +22,8 @@ export class Actions {
 
   playerAdded = output<void>();
   roundAdded = output<void>();
+
+  notes = viewChild.required(Notes);
 
   addPlayer() {
     this.state.addPlayer();
@@ -45,6 +48,10 @@ export class Actions {
       this.actionsPosition.set('bottom');
       this.storage.saveActionsPosition('bottom');
     }
+  }
+
+  openNotes() {
+    this.notes().dialogRef.nativeElement.querySelector<HTMLDialogElement>('dialog')?.showModal();
   }
 
   undo() {

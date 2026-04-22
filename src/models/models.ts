@@ -8,6 +8,7 @@ interface PlayerFormModel {
 
 export interface ScorekeeperFormModel {
   players: PlayerFormModel[];
+  notes: string;
 }
 
 export const actionsPositions = ['top', 'bottom'] as const;

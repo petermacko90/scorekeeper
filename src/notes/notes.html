@@ -1,0 +1,19 @@
+<dialog
+  class="w-full sm:w-sm my-auto sm:ml-16 mx-auto sm:mt-11 p-2 rounded-md bg-snow-storm-2 dark:bg-polar-night-4 shadow-md"
+>
+  <button
+    (click)="close()"
+    class="block w-6 h-6 ml-auto text-sm rounded-full bg-aurora-red text-snow-storm-3 hover:opacity-75 active:opacity-50 cursor-pointer"
+  >
+    <span class="material-symbols-outlined align-middle">close</span>
+  </button>
+  <label for="notes" class="block text-polar-night-1 dark:text-snow-storm-3">Notes</label>
+  <textarea
+    id="notes"
+    [formField]="state.scorekeeperForm.notes"
+    (change)="undoService.clearPrevState()"
+    autofocus
+    rows="5"
+    class="w-full p-1 bg-snow-storm-1 dark:bg-polar-night-2 text-polar-night-1 dark:text-snow-storm-3 rounded-sm"
+  ></textarea>
+</dialog>

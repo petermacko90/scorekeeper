@@ -4,6 +4,12 @@
   <sk-button text="Add Player" icon="person_add" type="positive" (action)="addPlayer()" />
   <sk-button text="Add Round" icon="add_row_below" type="positive" (action)="addRound()" />
   <sk-button
+    text="Notes"
+    icon="notes"
+    [type]="state.notes() === '' ? 'positive' : 'notice'"
+    (action)="openNotes()"
+  />
+  <sk-button
     [text]="isEditMode() ? 'Exit Edit Mode' : 'Enter Edit Mode'"
     [icon]="isEditMode() ? 'edit_off' : 'edit'"
     (action)="toggleEditMode()"
@@ -16,10 +22,10 @@
     (action)="state.reset()"
     [disabled]="state.isInitialState()"
   />
-
   <sk-button
     [text]="actionsPosition() === 'top' ? 'Move To Bottom' : 'Move To Top'"
     [icon]="actionsPosition() === 'top' ? 'vertical_align_bottom' : 'vertical_align_top'"
     (action)="toggleActionsPosition()"
   />
 </div>
+<sk-notes />
