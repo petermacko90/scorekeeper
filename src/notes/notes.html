@@ -1,13 +1,16 @@
 <dialog
-  class="w-full sm:w-sm my-auto sm:ml-16 mx-auto sm:mt-11 p-2 rounded-md bg-snow-storm-2 dark:bg-polar-night-4 shadow-md"
+  class="sm:left-11 w-full sm:w-sm my-auto mx-auto sm:m-0 py-2 px-3 rounded-md bg-snow-storm-2 dark:bg-polar-night-4 shadow-md"
+  [class.sm:top-11]="actionsPosition() === 'top'"
+  [class.sm:bottom-11]="actionsPosition() === 'bottom'"
+  [class.sm:top-auto]="actionsPosition() === 'bottom'"
 >
   <button
     (click)="close()"
-    class="block w-6 h-6 ml-auto text-sm rounded-full bg-aurora-red text-snow-storm-3 hover:opacity-75 active:opacity-50 cursor-pointer"
+    class="absolute top-1 right-1 w-6 h-6 text-sm rounded-full bg-aurora-red text-snow-storm-3 hover:opacity-75 active:opacity-50 cursor-pointer"
   >
     <span class="material-symbols-outlined align-middle">close</span>
   </button>
-  <label for="notes" class="block text-polar-night-1 dark:text-snow-storm-3">Notes</label>
+  <label for="notes" class="block text-polar-night-1 dark:text-snow-storm-3 font-bold">Notes</label>
   <textarea
     id="notes"
     [formField]="state.scorekeeperForm.notes"
