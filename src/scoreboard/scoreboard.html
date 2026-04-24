@@ -13,7 +13,6 @@
             [formField]="player.name"
             [placeholder]="getDefaultPlayerName(i)"
             (change)="undoService.clearPrevState()"
-            enterkeyhint="next"
             class="p-1 text-center text-polar-night-1 dark:text-snow-storm-3 placeholder:text-polar-night-4 dark:placeholder:text-snow-storm-3"
             [class.sk-full-input]="!isEditMode()"
             [class.w-24]="isEditMode()"
@@ -52,7 +51,6 @@
                 type="number"
                 [formField]="player.score[i]"
                 (keydown)="scoreChange($event, i)"
-                enterkeyhint="next"
                 placeholder="enter score"
                 class="p-1 text-right text-polar-night-1 dark:text-snow-storm-3 placeholder:text-polar-night-4 dark:placeholder:text-snow-storm-3 sk-full-input"
               />
