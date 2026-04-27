@@ -1,13 +1,14 @@
-<div
-  class="flex"
-  [class.flex-col]="actionsPosition() === 'top'"
-  [class.flex-col-reverse]="actionsPosition() === 'bottom'"
->
+<div class="flex flex-col">
+  @if (actionsPosition() === 'bottom') {
+    <sk-scoreboard [(isEditMode)]="isEditMode" />
+  }
   <sk-actions
     [(isEditMode)]="isEditMode"
     [(actionsPosition)]="actionsPosition"
     (playerAdded)="focusLastPlayer()"
     (roundAdded)="scrollToLastRound()"
   />
-  <sk-scoreboard [(isEditMode)]="isEditMode" />
+  @if (actionsPosition() === 'top') {
+    <sk-scoreboard [(isEditMode)]="isEditMode" />
+  }
 </div>
