@@ -1,3 +1,3 @@
-.sk-no-scrollbar::-webkit-scrollbar {
-  display: none;
+.sk-thin-scrollbar {
+  scrollbar-width: thin;
 }
