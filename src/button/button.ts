@@ -8,6 +8,7 @@ export class Button {
   text = input.required<string>();
   icon = input.required<string>();
   type = input<'default' | 'positive' | 'notice' | 'danger'>('default');
+  showText = input<boolean>(true);
   disabled = input<boolean>();
 
   action = output<void>();

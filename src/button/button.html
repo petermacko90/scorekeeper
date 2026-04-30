@@ -2,7 +2,7 @@
   (click)="action.emit()"
   [title]="text()"
   [disabled]="disabled()"
-  class="h-full px-1.5 hover:opacity-75 active:opacity-50 text-polar-night-1 rounded-sm focus:outline-solid focus:outline-2 outline-polar-night-4 dark:outline-snow-storm-3"
+  class="h-9 px-1.5 hover:opacity-75 active:opacity-50 text-polar-night-1 rounded-sm focus:outline-solid focus:outline-2 outline-polar-night-4 dark:outline-snow-storm-3"
   [class.bg-frost-1]="type() === 'default'"
   [class.bg-aurora-red]="type() === 'danger'"
   [class.bg-aurora-green]="type() === 'positive'"
@@ -13,5 +13,7 @@
 >
   <span class="material-symbols-outlined align-middle font-bold">{{ icon() }}</span>
   {{ ' ' }}
-  <span class="hidden md:inline">{{ text() }}</span>
+  @if (showText()) {
+    <span class="hidden md:inline">{{ text() }}</span>
+  }
 </button>

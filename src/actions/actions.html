@@ -1,31 +1,58 @@
 <div
-  class="w-full h-11 flex flex-row gap-1 p-1 overflow-y-hidden whitespace-nowrap sk-thin-scrollbar"
+  [class]="`flex gap-1 p-1 whitespace-nowrap sk-thin-scrollbar ${isActionsPositionVertical() ? 'w-11 h-dvh flex-col overflow-x-hidden' : 'w-full h-11 flex-row overflow-y-hidden'}`"
 >
-  <sk-button text="Add Player" icon="person_add" type="positive" (action)="addPlayer()" />
-  <sk-button text="Add Round" icon="add_row_below" type="positive" (action)="addRound()" />
+  <sk-button
+    text="Add Player"
+    icon="person_add"
+    type="positive"
+    (action)="addPlayer()"
+    [showText]="!isActionsPositionVertical()"
+  />
+  <sk-button
+    text="Add Round"
+    icon="add_row_below"
+    type="positive"
+    (action)="addRound()"
+    [showText]="!isActionsPositionVertical()"
+  />
   <sk-button
     text="Notes"
     icon="notes"
     [type]="state.notes() === '' ? 'positive' : 'notice'"
     (action)="openNotes()"
+    [showText]="!isActionsPositionVertical()"
   />
   <sk-button
     [text]="isEditMode() ? 'Exit Edit Mode' : 'Enter Edit Mode'"
     [icon]="isEditMode() ? 'edit_off' : 'edit'"
     (action)="toggleEditMode()"
+    [showText]="!isActionsPositionVertical()"
   />
-  <sk-button text="Undo" icon="undo" (action)="undo()" [disabled]="!undoService.isUndoEnabled()" />
+  <sk-button
+    text="Undo"
+    icon="undo"
+    (action)="undo()"
+    [disabled]="!undoService.isUndoEnabled()"
+    [showText]="!isActionsPositionVertical()"
+  />
   <sk-button
     text="Reset"
     icon="delete_forever"
     type="danger"
     (action)="state.reset()"
     [disabled]="state.isInitialState()"
+    [showText]="!isActionsPositionVertical()"
   />
-  <sk-button
-    [text]="actionsPosition() === 'top' ? 'Move To Bottom' : 'Move To Top'"
-    [icon]="actionsPosition() === 'top' ? 'vertical_align_bottom' : 'vertical_align_top'"
-    (action)="toggleActionsPosition()"
-  />
+  <select
+    [value]="actionsPosition()"
+    (change)="changeActionsPosition($event)"
+    class="h-9"
+    title="Change Position"
+  >
+    <option value="top">Top</option>
+    <option value="bottom">Bottom</option>
+    <option value="left">Left</option>
+    <option value="right">Right</option>
+  </select>
 </div>
 <sk-notes [actionsPosition]="actionsPosition()" />

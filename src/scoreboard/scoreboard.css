@@ -15,3 +15,7 @@ input[type='number'] {
 .sk-table-height {
   height: calc(100dvh - var(--spacing) * 11);
 }
+
+.sk-table-width {
+  width: calc(100vw - var(--spacing) * 11);
+}

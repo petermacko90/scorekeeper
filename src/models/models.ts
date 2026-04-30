@@ -11,5 +11,5 @@ export interface ScorekeeperFormModel {
   notes: string;
 }
 
-export const actionsPositions = ['top', 'bottom'] as const;
+export const actionsPositions = ['top', 'bottom', 'left', 'right'] as const;
 export type ActionsPosition = (typeof actionsPositions)[number];

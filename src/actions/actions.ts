@@ -39,15 +39,14 @@ export class Actions {
     this.isEditMode.update((value) => !value);
   }
 
-  toggleActionsPosition() {
-    const position = this.actionsPosition();
-    if (position === 'bottom') {
-      this.actionsPosition.set('top');
-      this.storage.saveActionsPosition('top');
-    } else {
-      this.actionsPosition.set('bottom');
-      this.storage.saveActionsPosition('bottom');
-    }
+  changeActionsPosition($event: Event) {
+    const value = ($event.target as HTMLSelectElement).value as ActionsPosition;
+    this.actionsPosition.set(value);
+    this.storage.saveActionsPosition(value);
+  }
+
+  isActionsPositionVertical(): boolean {
+    return this.actionsPosition() === 'left' || this.actionsPosition() === 'right';
   }
 
   openNotes() {
