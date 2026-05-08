@@ -1,10 +1,12 @@
 <sk-dialog (dialogToggled)="loadPositions()">
-  <label for="actions-position" class="font-bold">Actions Position: </label>
+  <label for="actions-position" class="text-polar-night-1 dark:text-snow-storm-3 font-bold">
+    Actions Position:
+  </label>
   <select
     id="actions-position"
     [value]="newPosition()"
     (change)="changeActionsPosition($event)"
-    class="h-9"
+    class="h-9 ml-1 px-1.5 rounded-sm bg-snow-storm-1 text-polar-night-1 dark:bg-polar-night-2 dark:text-snow-storm-3 focus:outline-solid focus:outline-2 outline-polar-night-4 dark:outline-snow-storm-3"
   >
     <option value="top">Top</option>
     <option value="bottom">Bottom</option>
