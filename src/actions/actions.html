@@ -43,16 +43,7 @@
     [disabled]="state.isInitialState()"
     [showText]="!isActionsPositionVertical()"
   />
-  <select
-    [value]="actions.position()"
-    (change)="changeActionsPosition($event)"
-    class="h-9"
-    title="Change Position"
-  >
-    <option value="top">Top</option>
-    <option value="bottom">Bottom</option>
-    <option value="left">Left</option>
-    <option value="right">Right</option>
-  </select>
+  <sk-button text="More" icon="more_vert" [showText]="false" (action)="openSettings()" />
 </div>
 <sk-notes />
+<sk-settings />

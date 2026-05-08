@@ -1,0 +1,14 @@
+<dialog
+  (toggle)="dialogToggled.emit()"
+  class="top-12 w-full sm:w-sm mx-auto sm:m-0 py-2 px-3 rounded-md bg-snow-storm-2 dark:bg-polar-night-4 shadow-md"
+  [class.sm:top-12]="actions.position() === 'top'"
+  [class.sm:bottom-16]="actions.position() === 'bottom'"
+  [class.sm:top-auto]="actions.position() === 'bottom'"
+  [class.sm:left-12]="
+    actions.position() === 'left' || actions.position() === 'top' || actions.position() === 'bottom'
+  "
+  [class.sm:right-16]="actions.position() === 'right'"
+  [class.sm:left-auto]="actions.position() === 'right'"
+>
+  <ng-content></ng-content>
+</dialog>

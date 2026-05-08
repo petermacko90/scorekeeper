@@ -6,10 +6,11 @@ import { ActionsPosition } from '../models/models';
 import { StorageService } from '../storage/storage.service';
 import { Notes } from '../notes/notes';
 import { ActionsPositionService } from './actions-positions.service';
+import { Settings } from '../settings/settings';
 
 @Component({
   selector: 'sk-actions',
-  imports: [Button, Notes],
+  imports: [Button, Notes, Settings],
   templateUrl: './actions.html',
   styleUrl: './actions.css',
 })
@@ -24,7 +25,8 @@ export class Actions {
   playerAdded = output<void>();
   roundAdded = output<void>();
 
-  notes = viewChild.required(Notes);
+  private notes = viewChild.required(Notes);
+  private settings = viewChild.required(Settings);
 
   addPlayer() {
     this.state.addPlayer();
@@ -51,6 +53,10 @@ export class Actions {
 
   openNotes() {
     this.notes().dialogRef.nativeElement.querySelector<HTMLDialogElement>('dialog')?.showModal();
+  }
+
+  openSettings() {
+    this.settings().dialogRef.nativeElement.querySelector<HTMLDialogElement>('dialog')?.showModal();
   }
 
   undo() {

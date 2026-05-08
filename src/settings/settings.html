@@ -1,0 +1,19 @@
+<sk-dialog (dialogToggled)="loadPositions()">
+  <label for="actions-position" class="font-bold">Actions Position: </label>
+  <select
+    id="actions-position"
+    [value]="newPosition()"
+    (change)="changeActionsPosition($event)"
+    class="h-9"
+  >
+    <option value="top">Top</option>
+    <option value="bottom">Bottom</option>
+    <option value="left">Left</option>
+    <option value="right">Right</option>
+  </select>
+
+  <div class="flex gap-1 mt-2">
+    <sk-button text="Save" icon="save" (action)="save()" />
+    <sk-button text="Cancel" icon="cancel" (action)="close()" type="danger" />
+  </div>
+</sk-dialog>
