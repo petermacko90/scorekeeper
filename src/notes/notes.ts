@@ -1,8 +1,8 @@
-import { Component, ElementRef, inject, input } from '@angular/core';
+import { Component, ElementRef, inject } from '@angular/core';
 import { StateService } from '../state/state.service';
 import { FormField } from '@angular/forms/signals';
 import { UndoService } from '../state/undo.service';
-import { ActionsPosition } from '../models/models';
+import { ActionsPositionService } from '../actions/actions-positions.service';
 
 @Component({
   selector: 'sk-notes',
@@ -12,8 +12,7 @@ import { ActionsPosition } from '../models/models';
 export class Notes {
   state = inject(StateService);
   undoService = inject(UndoService);
-
-  actionsPosition = input.required<ActionsPosition>();
+  actions = inject(ActionsPositionService);
 
   dialogRef: ElementRef<HTMLDialogElement> = inject(ElementRef);
 

@@ -44,7 +44,7 @@
     [showText]="!isActionsPositionVertical()"
   />
   <select
-    [value]="actionsPosition()"
+    [value]="actions.position()"
     (change)="changeActionsPosition($event)"
     class="h-9"
     title="Change Position"
@@ -55,4 +55,4 @@
     <option value="right">Right</option>
   </select>
 </div>
-<sk-notes [actionsPosition]="actionsPosition()" />
+<sk-notes />

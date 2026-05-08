@@ -1,8 +1,8 @@
-import { Component, inject, OnInit, signal, viewChild } from '@angular/core';
+import { Component, inject, signal, viewChild } from '@angular/core';
 import { Scoreboard } from '../scoreboard/scoreboard';
 import { Actions } from '../actions/actions';
-import { ActionsPosition } from '../models/models';
 import { StorageService } from '../storage/storage.service';
+import { ActionsPositionService } from '../actions/actions-positions.service';
 
 @Component({
   selector: 'app-root',
@@ -10,22 +10,13 @@ import { StorageService } from '../storage/storage.service';
   templateUrl: './app.html',
   styleUrl: './app.css',
 })
-export class App implements OnInit {
+export class App {
   storage = inject(StorageService);
+  actions = inject(ActionsPositionService);
 
   isEditMode = signal<boolean>(false);
-  actionsPosition = signal<ActionsPosition>('top');
 
   scoreboard = viewChild.required(Scoreboard);
-
-  ngOnInit(): void {
-    this.loadActionsPosition();
-  }
-
-  private loadActionsPosition() {
-    const position = this.storage.loadActionsPosition();
-    if (position !== null) this.actionsPosition.set(position);
-  }
 
   focusLastPlayer() {
     setTimeout(() => {

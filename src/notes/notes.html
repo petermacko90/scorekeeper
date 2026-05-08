@@ -1,13 +1,13 @@
 <dialog
   class="top-11 w-full sm:w-sm mx-auto sm:m-0 py-2 px-3 rounded-md bg-snow-storm-2 dark:bg-polar-night-4 shadow-md"
-  [class.sm:top-11]="actionsPosition() === 'top'"
-  [class.sm:bottom-11]="actionsPosition() === 'bottom'"
-  [class.sm:top-auto]="actionsPosition() === 'bottom'"
+  [class.sm:top-11]="actions.position() === 'top'"
+  [class.sm:bottom-11]="actions.position() === 'bottom'"
+  [class.sm:top-auto]="actions.position() === 'bottom'"
   [class.sm:left-11]="
-    actionsPosition() === 'left' || actionsPosition() === 'top' || actionsPosition() === 'bottom'
+    actions.position() === 'left' || actions.position() === 'top' || actions.position() === 'bottom'
   "
-  [class.sm:right-11]="actionsPosition() === 'right'"
-  [class.sm:left-auto]="actionsPosition() === 'right'"
+  [class.sm:right-11]="actions.position() === 'right'"
+  [class.sm:left-auto]="actions.position() === 'right'"
 >
   <button
     (click)="close()"

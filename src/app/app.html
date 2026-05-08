@@ -1,18 +1,17 @@
 <div
   class="flex"
-  [class.flex-col]="actionsPosition() === 'top' || actionsPosition() === 'bottom'"
-  [class.flex-row]="actionsPosition() === 'left' || actionsPosition() === 'right'"
+  [class.flex-col]="actions.position() === 'top' || actions.position() === 'bottom'"
+  [class.flex-row]="actions.position() === 'left' || actions.position() === 'right'"
 >
-  @if (actionsPosition() === 'bottom' || actionsPosition() === 'right') {
-    <sk-scoreboard [(isEditMode)]="isEditMode" [actionsPosition]="actionsPosition()" />
+  @if (actions.position() === 'bottom' || actions.position() === 'right') {
+    <sk-scoreboard [(isEditMode)]="isEditMode" />
   }
   <sk-actions
     [(isEditMode)]="isEditMode"
-    [(actionsPosition)]="actionsPosition"
     (playerAdded)="focusLastPlayer()"
     (roundAdded)="scrollToLastRound()"
   />
-  @if (actionsPosition() === 'top' || actionsPosition() === 'left') {
-    <sk-scoreboard [(isEditMode)]="isEditMode" [actionsPosition]="actionsPosition()" />
+  @if (actions.position() === 'top' || actions.position() === 'left') {
+    <sk-scoreboard [(isEditMode)]="isEditMode" />
   }
 </div>

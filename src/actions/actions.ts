@@ -5,6 +5,7 @@ import { UndoService } from '../state/undo.service';
 import { ActionsPosition } from '../models/models';
 import { StorageService } from '../storage/storage.service';
 import { Notes } from '../notes/notes';
+import { ActionsPositionService } from './actions-positions.service';
 
 @Component({
   selector: 'sk-actions',
@@ -16,9 +17,9 @@ export class Actions {
   state = inject(StateService);
   storage = inject(StorageService);
   undoService = inject(UndoService);
+  actions = inject(ActionsPositionService);
 
   isEditMode = model.required<boolean>();
-  actionsPosition = model.required<ActionsPosition>();
 
   playerAdded = output<void>();
   roundAdded = output<void>();
@@ -41,12 +42,11 @@ export class Actions {
 
   changeActionsPosition($event: Event) {
     const value = ($event.target as HTMLSelectElement).value as ActionsPosition;
-    this.actionsPosition.set(value);
-    this.storage.saveActionsPosition(value);
+    this.actions.setPosition(value);
   }
 
   isActionsPositionVertical(): boolean {
-    return this.actionsPosition() === 'left' || this.actionsPosition() === 'right';
+    return this.actions.position() === 'left' || this.actions.position() === 'right';
   }
 
   openNotes() {
