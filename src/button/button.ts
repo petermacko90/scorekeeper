@@ -9,6 +9,7 @@ export class Button {
   icon = input.required<string>();
   type = input<'default' | 'positive' | 'notice' | 'danger'>('default');
   showText = input<boolean>(true);
+  hideTextOnSmallScreen = input<boolean>(false);
   disabled = input<boolean>();
 
   action = output<void>();

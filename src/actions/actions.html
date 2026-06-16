@@ -7,6 +7,7 @@
     type="positive"
     (action)="addPlayer()"
     [showText]="!isActionsPositionVertical()"
+    [hideTextOnSmallScreen]="true"
   />
   <sk-button
     text="Add Round"
@@ -14,6 +15,7 @@
     type="positive"
     (action)="addRound()"
     [showText]="!isActionsPositionVertical()"
+    [hideTextOnSmallScreen]="true"
   />
   <sk-button
     text="Notes"
@@ -21,12 +23,14 @@
     [type]="state.notes() === '' ? 'positive' : 'notice'"
     (action)="openNotes()"
     [showText]="!isActionsPositionVertical()"
+    [hideTextOnSmallScreen]="true"
   />
   <sk-button
     [text]="isEditMode() ? 'Exit Edit Mode' : 'Enter Edit Mode'"
     [icon]="isEditMode() ? 'edit_off' : 'edit'"
     (action)="toggleEditMode()"
     [showText]="!isActionsPositionVertical()"
+    [hideTextOnSmallScreen]="true"
   />
   <sk-button
     text="Undo"
@@ -34,6 +38,7 @@
     (action)="undo()"
     [disabled]="!undoService.isUndoEnabled()"
     [showText]="!isActionsPositionVertical()"
+    [hideTextOnSmallScreen]="true"
   />
   <sk-button
     text="Reset"
@@ -42,6 +47,7 @@
     (action)="state.reset()"
     [disabled]="state.isInitialState()"
     [showText]="!isActionsPositionVertical()"
+    [hideTextOnSmallScreen]="true"
   />
   <sk-button text="More" icon="more_vert" [showText]="false" (action)="openSettings()" />
 </div>

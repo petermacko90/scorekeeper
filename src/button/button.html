@@ -12,8 +12,9 @@
   [class.cursor-not-allowed]="disabled()"
 >
   <span class="material-symbols-outlined align-middle font-bold">{{ icon() }}</span>
-  {{ ' ' }}
   @if (showText()) {
-    <span class="hidden md:inline">{{ text() }}</span>
+    <span class="md:inline ml-1 align-middle" [class.hidden]="hideTextOnSmallScreen()">
+      {{ text() }}
+    </span>
   }
 </button>
