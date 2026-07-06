@@ -1,4 +1,4 @@
-import { Component, inject, output } from '@angular/core';
+import { Component, inject, input, output } from '@angular/core';
 import { ActionsPositionService } from '../actions/actions-positions.service';
 
 @Component({
@@ -7,6 +7,8 @@ import { ActionsPositionService } from '../actions/actions-positions.service';
 })
 export class Dialog {
   actions = inject(ActionsPositionService);
+
+  heading = input.required<string>();
 
   dialogToggled = output<void>();
 }

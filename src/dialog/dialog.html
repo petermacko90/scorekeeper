@@ -1,6 +1,6 @@
 <dialog
   (toggle)="dialogToggled.emit()"
-  class="top-12 w-full sm:w-sm mx-auto sm:m-0 py-2 px-3 rounded-md bg-snow-storm-2 dark:bg-polar-night-4 shadow-md"
+  class="top-12 w-full sm:w-sm my-auto mx-auto sm:m-0 rounded-md bg-snow-storm-3 dark:bg-polar-night-2 border border-snow-storm-1 dark:border-polar-night-4 shadow-md backdrop:bg-polar-night-1 backdrop:opacity-75"
   [class.sm:top-12]="actions.position() === 'top'"
   [class.sm:bottom-16]="actions.position() === 'bottom'"
   [class.sm:top-auto]="actions.position() === 'bottom'"
@@ -10,5 +10,12 @@
   [class.sm:right-16]="actions.position() === 'right'"
   [class.sm:left-auto]="actions.position() === 'right'"
 >
-  <ng-content></ng-content>
+  <div
+    class="bg-snow-storm-1 dark:bg-polar-night-1 text-polar-night-1 dark:text-snow-storm-3 py-2 text-center"
+  >
+    {{ heading() }}
+  </div>
+  <div class="p-3">
+    <ng-content></ng-content>
+  </div>
 </dialog>

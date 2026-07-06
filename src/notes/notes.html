@@ -1,15 +1,15 @@
-<sk-dialog>
-  <label for="notes" class="block text-polar-night-1 dark:text-snow-storm-3 font-bold">Notes</label>
+<sk-dialog heading="Notes">
   <textarea
     id="notes"
     [formField]="state.scorekeeperForm.notes"
     (change)="undoService.clearPrevState()"
     autofocus
     rows="5"
-    class="w-full p-1 field-sizing-content bg-snow-storm-1 dark:bg-polar-night-2 text-polar-night-1 dark:text-snow-storm-3 rounded-sm focus:outline-solid focus:outline-2 outline-polar-night-4 dark:outline-snow-storm-3 selection:bg-frost-4 selection:text-snow-storm-3"
+    placeholder="Add your notes about the game here"
+    class="w-full p-1 field-sizing-content bg-snow-storm-2 dark:bg-polar-night-3 text-polar-night-1 dark:text-snow-storm-3 rounded-sm border border-snow-storm-1 dark:border-polar-night-4 focus:outline-solid focus:outline-2 outline-polar-night-4 dark:outline-snow-storm-3 selection:bg-frost-4 selection:text-snow-storm-3 placeholder:text-polar-night-1 dark:placeholder:text-snow-storm-1 placeholder:opacity-60"
   ></textarea>
 
-  <div class="mt-2">
+  <div class="mt-3">
     <sk-button text="Close" icon="cancel" (action)="close()" />
   </div>
 </sk-dialog>
