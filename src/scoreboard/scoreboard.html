@@ -17,7 +17,7 @@
               [placeholder]="getDefaultPlayerName(i)"
               (change)="undoService.clearPrevState()"
               autocomplete="off"
-              class="p-1 text-center text-polar-night-1 dark:text-snow-storm-3 placeholder:text-polar-night-4 dark:placeholder:text-snow-storm-3 rounded-sm focus:outline-solid focus:outline-1 outline-polar-night-4 dark:outline-snow-storm-3 selection:bg-frost-4 selection:text-snow-storm-3"
+              class="p-1 text-center text-polar-night-1 dark:text-snow-storm-3 placeholder:text-polar-night-4 dark:placeholder:text-snow-storm-1 placeholder:italic rounded-sm focus:outline-solid focus:outline-1 outline-polar-night-4 dark:outline-snow-storm-3 selection:bg-frost-4 selection:text-snow-storm-3"
               [class.sk-full-input]="!isEditMode()"
               [class.w-24]="isEditMode()"
             />
@@ -58,7 +58,7 @@
                   [formField]="player.score[i]"
                   (keydown)="scoreChange($event, i)"
                   placeholder="enter score"
-                  class="p-1 text-right text-polar-night-1 dark:text-snow-storm-3 placeholder:text-polar-night-4 dark:placeholder:text-snow-storm-3 rounded-sm focus:outline-solid focus:outline-1 outline-polar-night-4 dark:outline-snow-storm-3 selection:bg-frost-4 selection:text-snow-storm-3 sk-full-input"
+                  class="p-1 text-right text-polar-night-1 dark:text-snow-storm-3 placeholder:text-polar-night-4 dark:placeholder:text-snow-storm-1 placeholder:italic rounded-sm focus:outline-solid focus:outline-1 outline-polar-night-4 dark:outline-snow-storm-3 selection:bg-frost-4 selection:text-snow-storm-3 sk-full-input"
                 />
               </td>
             }
