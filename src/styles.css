@@ -2,6 +2,8 @@
 
 @import 'tailwindcss';
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 @theme {
   --color-polar-night-1: #2e3440;
   --color-polar-night-2: #3b4252;

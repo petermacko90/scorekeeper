@@ -1,8 +1,10 @@
 import { Component, ElementRef, inject, signal } from '@angular/core';
 import { Dialog } from '../dialog/dialog';
 import { ActionsPositionService } from '../actions/actions-positions.service';
-import { ActionsPosition } from '../models/models';
+import { ActionsPosition, Theme } from '../models/models';
 import { Button } from '../button/button';
+import { StorageService } from '../storage/storage.service';
+import { ThemeService } from '../theme/theme.service';
 
 @Component({
   selector: 'sk-settings',
@@ -11,10 +13,14 @@ import { Button } from '../button/button';
 })
 export class Settings {
   actions = inject(ActionsPositionService);
+  storage = inject(StorageService);
+  themeService = inject(ThemeService);
 
   dialogRef: ElementRef<HTMLDialogElement> = inject(ElementRef);
 
   newPosition = signal<ActionsPosition>(this.actions.position());
+
+  theme = signal<Theme>(this.storage.loadTheme());
 
   changeActionsPosition($event: Event) {
     const value = ($event.target as HTMLSelectElement).value as ActionsPosition;
@@ -23,6 +29,16 @@ export class Settings {
 
   loadPositions() {
     this.newPosition.set(this.actions.position());
+  }
+
+  changeTheme($event: Event) {
+    const theme = ($event.target as HTMLSelectElement).value as Theme;
+    if (theme === 'system') {
+      this.storage.deleteTheme();
+    } else {
+      this.storage.saveTheme(theme);
+    }
+    this.themeService.changeTheme();
   }
 
   save() {

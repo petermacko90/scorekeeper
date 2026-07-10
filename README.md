@@ -16,5 +16,5 @@ Built with Angular, using signals and signal forms. Styled with Tailwind CSS.
 - undo certain actions
 - move the actions panel to top, bottom, left or right
 - responsive layout
-- light/dark theme based on browser setting (prefers-color-scheme)
+- light/dark/system theme
 - save the state to local storage

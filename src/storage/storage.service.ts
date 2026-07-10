@@ -1,10 +1,17 @@
 import { Injectable } from '@angular/core';
-import { ActionsPosition, actionsPositions, ScorekeeperFormModel } from '../models/models';
+import {
+  ActionsPosition,
+  actionsPositions,
+  ScorekeeperFormModel,
+  Theme,
+  themes,
+} from '../models/models';
 
 @Injectable({ providedIn: 'root' })
 export class StorageService {
   private readonly stateKey = 'scorekeeper';
   private readonly actionsPositionKey = 'skActionsPosition';
+  private readonly themeKey = 'skTheme';
 
   save(state: ScorekeeperFormModel) {
     try {
@@ -47,5 +54,38 @@ export class StorageService {
 
   private isActionsPosition(input: string): input is ActionsPosition {
     return actionsPositions.includes(input as any);
+  }
+
+  saveTheme(theme: Theme) {
+    try {
+      localStorage.setItem(this.themeKey, theme);
+    } catch (error) {
+      console.error('StorageService.saveTheme error', error);
+    }
+  }
+
+  loadTheme(): Theme {
+    try {
+      const theme = localStorage.getItem(this.themeKey);
+      if (theme === null) return 'system';
+      if (this.isTheme(theme)) return theme;
+      localStorage.removeItem(this.themeKey);
+      return 'dark';
+    } catch (error) {
+      console.error('StorageService.loadTheme error', error);
+      return 'dark';
+    }
+  }
+
+  deleteTheme() {
+    try {
+      localStorage.removeItem(this.themeKey);
+    } catch (error) {
+      console.error('StorageService.deleteTheme error', error);
+    }
+  }
+
+  private isTheme(input: string): input is Theme {
+    return themes.includes(input as any);
   }
 }
