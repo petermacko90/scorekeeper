@@ -1,10 +1,10 @@
-<sk-dialog heading="Settings" (dialogToggled)="loadPositions()">
+<sk-dialog heading="Settings">
   <label for="actions-position" class="text-polar-night-1 dark:text-snow-storm-3">
     Actions Position:
   </label>
   <select
     id="actions-position"
-    [value]="newPosition()"
+    [value]="position()"
     (change)="changeActionsPosition($event)"
     class="h-9 ml-1 px-1.5 rounded-sm bg-snow-storm-2 text-polar-night-1 dark:bg-polar-night-3 dark:text-snow-storm-3 border border-snow-storm-1 dark:border-polar-night-4 focus:outline-solid focus:outline-2 outline-polar-night-4 dark:outline-snow-storm-3"
   >
@@ -29,7 +29,6 @@
   </div>
 
   <div class="flex gap-3 mt-3">
-    <sk-button text="Save" icon="save" (action)="save()" />
-    <sk-button text="Cancel" icon="cancel" (action)="close()" type="danger" />
+    <sk-button text="Close" icon="cancel" (action)="close()" />
   </div>
 </sk-dialog>

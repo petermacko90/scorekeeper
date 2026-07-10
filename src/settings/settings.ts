@@ -18,17 +18,12 @@ export class Settings {
 
   dialogRef: ElementRef<HTMLDialogElement> = inject(ElementRef);
 
-  newPosition = signal<ActionsPosition>(this.actions.position());
-
+  position = signal<ActionsPosition>(this.actions.position());
   theme = signal<Theme>(this.storage.loadTheme());
 
   changeActionsPosition($event: Event) {
-    const value = ($event.target as HTMLSelectElement).value as ActionsPosition;
-    this.newPosition.set(value);
-  }
-
-  loadPositions() {
-    this.newPosition.set(this.actions.position());
+    const position = ($event.target as HTMLSelectElement).value as ActionsPosition;
+    this.actions.setPosition(position);
   }
 
   changeTheme($event: Event) {
@@ -39,11 +34,6 @@ export class Settings {
       this.storage.saveTheme(theme);
     }
     this.themeService.changeTheme();
-  }
-
-  save() {
-    this.actions.setPosition(this.newPosition());
-    this.dialogRef.nativeElement.querySelector<HTMLDialogElement>('dialog')?.close();
   }
 
   close() {
