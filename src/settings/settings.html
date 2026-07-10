@@ -1,31 +1,19 @@
 <sk-dialog heading="Settings">
-  <label for="actions-position" class="text-polar-night-1 dark:text-snow-storm-3">
-    Actions Position:
-  </label>
-  <select
-    id="actions-position"
-    [value]="position()"
-    (change)="changeActionsPosition($event)"
-    class="h-9 ml-1 px-1.5 rounded-sm bg-snow-storm-2 text-polar-night-1 dark:bg-polar-night-3 dark:text-snow-storm-3 border border-snow-storm-1 dark:border-polar-night-4 focus:outline-solid focus:outline-2 outline-polar-night-4 dark:outline-snow-storm-3"
-  >
-    <option value="top">Top</option>
-    <option value="bottom">Bottom</option>
-    <option value="left">Left</option>
-    <option value="right">Right</option>
-  </select>
-
-  <div class="mt-3">
-    <label for="theme" class="text-polar-night-1 dark:text-snow-storm-3"> Theme: </label>
-    <select
+  <div class="flex flex-col gap-3">
+    <sk-select
+      id="actions-position"
+      label="Actions Position:"
+      [value]="position()"
+      [options]="positionOptions"
+      (selectionChanged)="changeActionsPosition($event)"
+    />
+    <sk-select
       id="theme"
+      label="Theme:"
       [value]="theme()"
-      (change)="changeTheme($event)"
-      class="h-9 ml-1 px-1.5 rounded-sm bg-snow-storm-2 text-polar-night-1 dark:bg-polar-night-3 dark:text-snow-storm-3 border border-snow-storm-1 dark:border-polar-night-4 focus:outline-solid focus:outline-2 outline-polar-night-4 dark:outline-snow-storm-3"
-    >
-      <option value="system">System</option>
-      <option value="dark">Dark</option>
-      <option value="light">Light</option>
-    </select>
+      [options]="themeOptions"
+      (selectionChanged)="changeTheme($event)"
+    />
   </div>
 
   <div class="flex gap-3 mt-3">
