@@ -11,12 +11,12 @@ import { ThemeService } from '../theme/theme.service';
   styleUrl: './app.css',
 })
 export class App implements OnInit {
-  theme = inject(ThemeService);
+  private theme = inject(ThemeService);
   actions = inject(ActionsPositionService);
 
   isEditMode = signal<boolean>(false);
 
-  scoreboard = viewChild.required(Scoreboard);
+  private scoreboard = viewChild.required(Scoreboard);
 
   ngOnInit(): void {
     this.theme.changeTheme();

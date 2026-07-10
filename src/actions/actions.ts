@@ -2,8 +2,6 @@ import { Component, inject, model, output, viewChild } from '@angular/core';
 import { Button } from '../button/button';
 import { StateService } from '../state/state.service';
 import { UndoService } from '../state/undo.service';
-import { ActionsPosition } from '../models/models';
-import { StorageService } from '../storage/storage.service';
 import { Notes } from '../notes/notes';
 import { ActionsPositionService } from './actions-positions.service';
 import { Settings } from '../settings/settings';
@@ -16,9 +14,8 @@ import { Settings } from '../settings/settings';
 })
 export class Actions {
   state = inject(StateService);
-  storage = inject(StorageService);
   undoService = inject(UndoService);
-  actions = inject(ActionsPositionService);
+  private actions = inject(ActionsPositionService);
 
   isEditMode = model.required<boolean>();
 
@@ -40,11 +37,6 @@ export class Actions {
 
   toggleEditMode() {
     this.isEditMode.update((value) => !value);
-  }
-
-  changeActionsPosition($event: Event) {
-    const value = ($event.target as HTMLSelectElement).value as ActionsPosition;
-    this.actions.setPosition(value);
   }
 
   isActionsPositionVertical(): boolean {

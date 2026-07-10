@@ -2,7 +2,6 @@ import { Component, ElementRef, inject } from '@angular/core';
 import { StateService } from '../state/state.service';
 import { FormField } from '@angular/forms/signals';
 import { UndoService } from '../state/undo.service';
-import { ActionsPositionService } from '../actions/actions-positions.service';
 import { Dialog } from '../dialog/dialog';
 import { Button } from '../button/button';
 
@@ -14,7 +13,6 @@ import { Button } from '../button/button';
 export class Notes {
   state = inject(StateService);
   undoService = inject(UndoService);
-  actions = inject(ActionsPositionService);
 
   dialogRef: ElementRef<HTMLDialogElement> = inject(ElementRef);
 

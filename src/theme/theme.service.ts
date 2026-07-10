@@ -3,7 +3,7 @@ import { StorageService } from '../storage/storage.service';
 
 @Injectable({ providedIn: 'root' })
 export class ThemeService {
-  storage = inject(StorageService);
+  private storage = inject(StorageService);
 
   changeTheme() {
     const theme = this.storage.loadTheme();

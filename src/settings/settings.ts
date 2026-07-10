@@ -12,9 +12,9 @@ import { ThemeService } from '../theme/theme.service';
   imports: [Dialog, Button],
 })
 export class Settings {
-  actions = inject(ActionsPositionService);
-  storage = inject(StorageService);
-  themeService = inject(ThemeService);
+  private actions = inject(ActionsPositionService);
+  private storage = inject(StorageService);
+  private themeService = inject(ThemeService);
 
   dialogRef: ElementRef<HTMLDialogElement> = inject(ElementRef);
 
