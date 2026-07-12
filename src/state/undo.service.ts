@@ -1,5 +1,5 @@
 import { Injectable, signal } from '@angular/core';
-import { ScorekeeperFormModel } from '../models/models';
+import { ScorekeeperFormModel } from './state.model';
 
 @Injectable({ providedIn: 'root' })
 export class UndoService {

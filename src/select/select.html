@@ -7,7 +7,7 @@
     class="h-9 ml-1 px-1.5 rounded-sm bg-snow-storm-2 text-polar-night-1 dark:bg-polar-night-3 dark:text-snow-storm-3 border border-snow-storm-1 dark:border-polar-night-4 focus:outline-solid focus:outline-2 outline-polar-night-4 dark:outline-snow-storm-3 cursor-pointer"
   >
     @for (option of options(); track option) {
-      <option [value]="option">{{ option | titlecase }}</option>
+      <option [value]="option" [selected]="value() === option">{{ option | titlecase }}</option>
     }
   </select>
 </label>

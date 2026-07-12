@@ -1,5 +1,5 @@
 import { inject, Injectable, signal } from '@angular/core';
-import { ActionsPosition } from '../models/models';
+import { ActionsPosition } from '../settings/settings.model';
 import { StorageService } from '../storage/storage.service';
 
 @Injectable({ providedIn: 'root' })

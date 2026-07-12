@@ -1,11 +1,6 @@
 import { Injectable } from '@angular/core';
-import {
-  ActionsPosition,
-  actionsPositions,
-  ScorekeeperFormModel,
-  Theme,
-  themes,
-} from '../models/models';
+import { ScorekeeperFormModel } from '../state/state.model';
+import { ActionsPosition, actionsPositions, Theme, themes } from '../settings/settings.model';
 
 @Injectable({ providedIn: 'root' })
 export class StorageService {
