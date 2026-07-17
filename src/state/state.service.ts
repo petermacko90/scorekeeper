@@ -8,8 +8,9 @@ import { UndoService } from './undo.service';
 @Injectable({ providedIn: 'root' })
 export class StateService {
   private storage = inject(StorageService);
-
   private undoService = inject(UndoService);
+
+  private readonly debounceTime = 300;
 
   private readonly initialState: ScorekeeperFormModel = {
     players: [{ id: uuidv4(), name: '', score: [null] }],
@@ -19,7 +20,8 @@ export class StateService {
   private scorekeeperModel = signal<ScorekeeperFormModel>(this.initialState);
 
   scorekeeperForm = form(this.scorekeeperModel, (schemaPath) => {
-    debounce(schemaPath.players, 300);
+    debounce(schemaPath.players, this.debounceTime);
+    debounce(schemaPath.notes, this.debounceTime);
   });
 
   roundsNumber = computed(() => this.scorekeeperForm.players[0].score.length);

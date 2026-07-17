@@ -7,14 +7,14 @@
         <th
           class="sticky left-0 p-1 bg-snow-storm-1 dark:bg-polar-night-3 border border-snow-storm-3 dark:border-polar-night-1"
         ></th>
-        @for (player of state.scorekeeperForm.players; track player; let i = $index) {
+        @for (player of state.scorekeeperForm.players; track player) {
           <th
             class="bg-snow-storm-1 dark:bg-polar-night-3 border border-snow-storm-3 dark:border-polar-night-1"
           >
             <input
               type="text"
               [formField]="player.name"
-              [placeholder]="getDefaultPlayerName(i)"
+              [placeholder]="getDefaultPlayerName($index)"
               (change)="undoService.clearPrevState()"
               autocomplete="off"
               class="p-1 text-center text-polar-night-1 dark:text-snow-storm-3 placeholder:text-polar-night-4 dark:placeholder:text-snow-storm-1 placeholder:italic rounded-sm focus:outline-solid focus:outline-1 outline-polar-night-4 dark:outline-snow-storm-3 selection:bg-frost-4 selection:text-snow-storm-3"
@@ -25,7 +25,7 @@
               <sk-remove-button
                 tooltip="Remove Player"
                 icon="person_remove"
-                (action)="state.removePlayer(i)"
+                (action)="state.removePlayer($index)"
               />
             }
           </th>
@@ -72,11 +72,11 @@
           >
             Sum
           </td>
-          @for (player of state.scorekeeperForm.players; track player; let i = $index) {
+          @for (player of state.scorekeeperForm.players; track player) {
             <td
               class="p-1 bg-snow-storm-1 dark:bg-polar-night-3 border border-snow-storm-3 dark:border-polar-night-1 text-polar-night-1 dark:text-snow-storm-3 font-bold text-right"
             >
-              {{ state.sums()[i] }}
+              {{ state.sums()[$index] }}
             </td>
           }
         </tr>
