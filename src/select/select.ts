@@ -1,18 +1,19 @@
 import { TitleCasePipe } from '@angular/common';
 import { Component, input, output } from '@angular/core';
+import { FieldState, FormField } from '@angular/forms/signals';
 
 @Component({
   selector: 'sk-select',
   templateUrl: './select.html',
-  imports: [TitleCasePipe],
+  imports: [TitleCasePipe, FormField],
 })
 export class Select<T extends string> {
   id = input.required<string>();
   label = input.required<string>();
-  value = input.required<T>();
+  field = input.required<FieldState<T>>();
   options = input.required<T[]>();
 
-  selectionChanged = output<T>();
+  protected selectionChanged = output<T>();
 
   selectionChange($event: Event) {
     const value = ($event.target as HTMLSelectElement).value as T;

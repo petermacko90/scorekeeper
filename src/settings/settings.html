@@ -3,14 +3,14 @@
     <sk-select
       id="actions-position"
       label="Actions Position:"
-      [value]="settingsForm.actionsPosition().value()"
+      [field]="settingsForm.actionsPosition()"
       [options]="positionOptions"
       (selectionChanged)="changeActionsPosition($event)"
     />
     <sk-select
       id="theme"
       label="Theme:"
-      [value]="settingsForm.theme().value()"
+      [field]="settingsForm.theme()"
       [options]="themeOptions"
       (selectionChanged)="changeTheme($event)"
     />
