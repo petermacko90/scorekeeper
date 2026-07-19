@@ -26,9 +26,9 @@
     [hideTextOnSmallScreen]="true"
   />
   <sk-button
-    [text]="isEditMode() ? 'Exit Edit Mode' : 'Enter Edit Mode'"
-    [icon]="isEditMode() ? 'edit_off' : 'edit'"
-    (action)="toggleEditMode()"
+    [text]="editMode.isEditMode() ? 'Exit Edit Mode' : 'Enter Edit Mode'"
+    [icon]="editMode.isEditMode() ? 'edit_off' : 'edit'"
+    (action)="editMode.toggleEditMode()"
     [showText]="!isActionsPositionVertical()"
     [hideTextOnSmallScreen]="true"
   />

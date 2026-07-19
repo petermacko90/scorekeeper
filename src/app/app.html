@@ -4,14 +4,10 @@
   [class.flex-row]="actions.position() === 'left' || actions.position() === 'right'"
 >
   @if (actions.position() === 'bottom' || actions.position() === 'right') {
-    <sk-scoreboard [(isEditMode)]="isEditMode" />
+    <sk-scoreboard />
   }
-  <sk-actions
-    [(isEditMode)]="isEditMode"
-    (playerAdded)="focusLastPlayer()"
-    (roundAdded)="scrollToLastRound()"
-  />
+  <sk-actions (playerAdded)="focusLastPlayer()" (roundAdded)="scrollToLastRound()" />
   @if (actions.position() === 'top' || actions.position() === 'left') {
-    <sk-scoreboard [(isEditMode)]="isEditMode" />
+    <sk-scoreboard />
   }
 </div>

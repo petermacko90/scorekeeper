@@ -18,10 +18,10 @@
               (change)="undoService.clearPrevState()"
               autocomplete="off"
               class="p-1 text-center text-polar-night-1 dark:text-snow-storm-3 placeholder:text-polar-night-4 dark:placeholder:text-snow-storm-1 placeholder:italic rounded-sm focus:outline-solid focus:outline-1 outline-polar-night-4 dark:outline-snow-storm-3 selection:bg-frost-4 selection:text-snow-storm-3"
-              [class.sk-full-input]="!isEditMode()"
-              [class.w-24]="isEditMode()"
+              [class.sk-full-input]="!editMode.isEditMode()"
+              [class.w-24]="editMode.isEditMode()"
             />
-            @if (isEditMode() && state.playersNumber() > 1) {
+            @if (editMode.isEditMode() && state.playersNumber() > 1) {
               <sk-remove-button
                 tooltip="Remove Player"
                 icon="person_remove"
@@ -37,13 +37,13 @@
             <td
               class="sticky left-0 p-1 bg-snow-storm-1 dark:bg-polar-night-3 border border-snow-storm-3 dark:border-polar-night-1 text-right"
             >
-              @if (isEditMode()) {
+              @if (editMode.isEditMode()) {
                 <sk-remove-button
                   [tooltip]="`Remove Round ${i + 1}`"
                   (action)="state.removeRound(i)"
                 />
               }
-              @if (!isEditMode()) {
+              @if (!editMode.isEditMode()) {
                 <span class="font-bold text-polar-night-1 dark:text-snow-storm-3"
                   >{{ i + 1 }}.</span
                 >

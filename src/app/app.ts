@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, signal, viewChild } from '@angular/core';
+import { Component, inject, OnInit, viewChild } from '@angular/core';
 import { Scoreboard } from '../scoreboard/scoreboard';
 import { Actions } from '../actions/actions';
 import { ActionsPositionService } from '../actions/actions-positions.service';
@@ -13,8 +13,6 @@ import { ThemeService } from '../theme/theme.service';
 export class App implements OnInit {
   private theme = inject(ThemeService);
   actions = inject(ActionsPositionService);
-
-  isEditMode = signal<boolean>(false);
 
   private scoreboard = viewChild.required(Scoreboard);
 

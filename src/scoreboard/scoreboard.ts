@@ -1,9 +1,10 @@
-import { Component, ElementRef, inject, model, OnInit } from '@angular/core';
+import { Component, ElementRef, inject, OnInit } from '@angular/core';
 import { FormField } from '@angular/forms/signals';
 import { StateService } from '../state/state.service';
 import { RemoveButton } from '../remove-button/remove-button';
 import { UndoService } from '../state/undo.service';
 import { ActionsPositionService } from '../actions/actions-positions.service';
+import { EditModeService } from '../actions/edit-mode.service';
 
 @Component({
   selector: 'sk-scoreboard',
@@ -15,8 +16,7 @@ export class Scoreboard implements OnInit {
   state = inject(StateService);
   undoService = inject(UndoService);
   actions = inject(ActionsPositionService);
-
-  isEditMode = model<boolean>();
+  editMode = inject(EditModeService);
 
   lastPlayerRef: ElementRef<HTMLInputElement> = inject(ElementRef);
   lastRoundRef: ElementRef<HTMLTableRowElement> = inject(ElementRef);

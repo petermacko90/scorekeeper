@@ -1,10 +1,11 @@
-import { Component, inject, model, output, viewChild } from '@angular/core';
+import { Component, inject, output, viewChild } from '@angular/core';
 import { Button } from '../button/button';
 import { StateService } from '../state/state.service';
 import { UndoService } from '../state/undo.service';
 import { Notes } from '../notes/notes';
 import { ActionsPositionService } from './actions-positions.service';
 import { Settings } from '../settings/settings';
+import { EditModeService } from './edit-mode.service';
 
 @Component({
   selector: 'sk-actions',
@@ -15,9 +16,8 @@ import { Settings } from '../settings/settings';
 export class Actions {
   state = inject(StateService);
   undoService = inject(UndoService);
+  editMode = inject(EditModeService);
   private actions = inject(ActionsPositionService);
-
-  isEditMode = model.required<boolean>();
 
   playerAdded = output<void>();
   roundAdded = output<void>();
@@ -33,10 +33,6 @@ export class Actions {
   addRound() {
     this.state.addRound();
     this.roundAdded.emit();
-  }
-
-  toggleEditMode() {
-    this.isEditMode.update((value) => !value);
   }
 
   isActionsPositionVertical(): boolean {
