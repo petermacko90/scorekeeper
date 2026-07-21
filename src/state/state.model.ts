@@ -1,6 +1,6 @@
 type Score = Array<number | null>;
 
-interface PlayerFormModel {
+export interface PlayerFormModel {
   id: string;
   name: string;
   score: Score;

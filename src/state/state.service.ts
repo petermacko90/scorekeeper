@@ -1,7 +1,7 @@
 import { computed, effect, inject, Injectable, signal } from '@angular/core';
 import { v4 as uuidv4 } from 'uuid';
-import { ScorekeeperFormModel } from './state.model';
-import { debounce, form } from '@angular/forms/signals';
+import { PlayerFormModel, ScorekeeperFormModel } from './state.model';
+import { applyEach, debounce, form, schema } from '@angular/forms/signals';
 import { StorageService } from '../storage/storage.service';
 import { UndoService } from './undo.service';
 
@@ -19,8 +19,13 @@ export class StateService {
 
   private scorekeeperModel = signal<ScorekeeperFormModel>(this.initialState);
 
+  private playersSchema = schema<PlayerFormModel>((player) => {
+    debounce(player.name, this.debounceTime);
+    debounce(player.score, this.debounceTime);
+  });
+
   scorekeeperForm = form(this.scorekeeperModel, (schemaPath) => {
-    debounce(schemaPath.players, this.debounceTime);
+    applyEach(schemaPath.players, this.playersSchema);
     debounce(schemaPath.notes, this.debounceTime);
   });
 
@@ -81,7 +86,7 @@ export class StateService {
     this.scorekeeperModel.update((data) => {
       return {
         ...data,
-        players: [...data.players.slice(0, index), ...data.players.slice(index + 1)],
+        players: data.players.toSpliced(index, 1),
       };
     });
   }
@@ -111,7 +116,7 @@ export class StateService {
         players: data.players.map((player) => {
           return {
             ...player,
-            score: [...player.score.slice(0, index), ...player.score.slice(index + 1)],
+            score: player.score.toSpliced(index, 1),
           };
         }),
       };
