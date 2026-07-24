@@ -7,6 +7,7 @@ export class StorageService {
   private readonly stateKey = 'scorekeeper';
   private readonly actionsPositionKey = 'skActionsPosition';
   private readonly themeKey = 'skTheme';
+  private readonly playerCounterKey = 'skPlayerCounter';
 
   save(state: ScorekeeperFormModel) {
     try {
@@ -82,5 +83,28 @@ export class StorageService {
 
   private isTheme(input: string): input is Theme {
     return themes.includes(input as any);
+  }
+
+  savePlayerCounter(counter: number) {
+    try {
+      localStorage.setItem(this.playerCounterKey, counter.toString());
+    } catch (error) {
+      console.error('StorageService.savePlayerCounter error', error);
+    }
+  }
+
+  loadPlayerCounter(): number {
+    try {
+      const counterString = localStorage.getItem(this.playerCounterKey);
+      const counter = Number(counterString);
+      if (!Number.isNaN(counter) && Number.isInteger(counter)) {
+        return counter;
+      }
+      localStorage.removeItem(this.playerCounterKey);
+      return 1;
+    } catch (error) {
+      console.error('StorageService.loadPlayerCounter error', error);
+      return 1;
+    }
   }
 }

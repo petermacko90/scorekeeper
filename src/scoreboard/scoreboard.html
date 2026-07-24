@@ -14,7 +14,7 @@
             <input
               type="text"
               [formField]="player.name"
-              [placeholder]="getDefaultPlayerName($index)"
+              placeholder="player name"
               (change)="undoService.clearPrevState()"
               autocomplete="off"
               class="p-1 text-center text-polar-night-1 dark:text-snow-storm-3 placeholder:text-polar-night-4 dark:placeholder:text-snow-storm-1 placeholder:italic rounded-sm focus:outline-solid focus:outline-1 outline-polar-night-4 dark:outline-snow-storm-3 selection:bg-frost-4 selection:text-snow-storm-3"

@@ -41,8 +41,4 @@ export class Scoreboard implements OnInit {
       this.undoService.clearPrevState();
     }
   }
-
-  getDefaultPlayerName(index: number): string {
-    return `Player ${index + 1}`;
-  }
 }

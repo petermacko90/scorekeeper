@@ -1,5 +1,4 @@
 import { computed, effect, inject, Injectable, signal } from '@angular/core';
-import { v4 as uuidv4 } from 'uuid';
 import { PlayerFormModel, ScorekeeperFormModel } from './state.model';
 import { applyEach, debounce, form, schema } from '@angular/forms/signals';
 import { StorageService } from '../storage/storage.service';
@@ -15,7 +14,7 @@ export class StateService {
   private readonly debounceTime = 300;
 
   private readonly initialState: ScorekeeperFormModel = {
-    players: [{ id: uuidv4(), name: '', score: [null] }],
+    players: [{ name: 'Player 1', score: [null] }],
     notes: '',
   };
 
@@ -30,6 +29,8 @@ export class StateService {
     applyEach(schemaPath.players, this.playersSchema);
     debounce(schemaPath.notes, this.debounceTime);
   });
+
+  private playerCounter = signal<number>(this.storage.loadPlayerCounter());
 
   roundsNumber = computed(() => this.scorekeeperForm.players[0].score.length);
   playersNumber = computed(() => this.scorekeeperForm.players.length);
@@ -66,6 +67,8 @@ export class StateService {
 
   addPlayer() {
     this.undoService.clearPrevState();
+    this.playerCounter.update((counter) => counter + 1);
+    this.storage.savePlayerCounter(this.playerCounter());
 
     this.scorekeeperModel.update((data) => {
       return {
@@ -73,8 +76,7 @@ export class StateService {
         players: [
           ...data.players,
           {
-            id: uuidv4(),
-            name: '',
+            name: `Player ${this.playerCounter()}`,
             score: new Array(this.roundsNumber()).fill(null),
           },
         ],
@@ -132,14 +134,15 @@ export class StateService {
 
   reset() {
     this.undoService.setPrevState(this.scorekeeperModel());
-
+    this.playerCounter.set(1);
+    this.storage.savePlayerCounter(this.playerCounter());
     this.scorekeeperForm().reset(this.initialState);
   }
 
   isInitialState(): boolean {
     return (
       this.scorekeeperModel().players.length === 1 &&
-      this.scorekeeperModel().players[0].name === '' &&
+      this.scorekeeperModel().players[0].name === 'Player 1' &&
       this.scorekeeperModel().players[0].score.length === 1 &&
       this.scorekeeperModel().players[0].score[0] === null &&
       this.scorekeeperModel().notes === ''

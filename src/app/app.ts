@@ -22,9 +22,12 @@ export class App implements OnInit {
 
   focusLastPlayer() {
     setTimeout(() => {
-      this.scoreboard()
-        .lastPlayerRef.nativeElement.querySelector<HTMLInputElement>('th:last-child>input')
-        ?.focus();
+      const lastPlayerElement =
+        this.scoreboard().lastPlayerRef.nativeElement.querySelector<HTMLInputElement>(
+          'th:last-child>input',
+        );
+      lastPlayerElement?.focus();
+      lastPlayerElement?.select();
     });
   }
 
