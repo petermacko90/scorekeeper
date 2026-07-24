@@ -4,11 +4,13 @@ import { PlayerFormModel, ScorekeeperFormModel } from './state.model';
 import { applyEach, debounce, form, schema } from '@angular/forms/signals';
 import { StorageService } from '../storage/storage.service';
 import { UndoService } from './undo.service';
+import { EditModeService } from '../actions/edit-mode.service';
 
 @Injectable({ providedIn: 'root' })
 export class StateService {
   private storage = inject(StorageService);
   private undoService = inject(UndoService);
+  private editMode = inject(EditModeService);
 
   private readonly debounceTime = 300;
 
@@ -83,12 +85,17 @@ export class StateService {
   removePlayer(index: number) {
     this.undoService.setPrevState(this.scorekeeperModel());
 
-    this.scorekeeperModel.update((data) => {
-      return {
-        ...data,
-        players: data.players.toSpliced(index, 1),
-      };
-    });
+    if (this.playersNumber() === 1) {
+      this.reset();
+      this.editMode.toggleEditMode();
+    } else {
+      this.scorekeeperModel.update((data) => {
+        return {
+          ...data,
+          players: data.players.toSpliced(index, 1),
+        };
+      });
+    }
   }
 
   addRound() {

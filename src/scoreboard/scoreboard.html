@@ -21,7 +21,7 @@
               [class.sk-full-input]="!editMode.isEditMode()"
               [class.w-24]="editMode.isEditMode()"
             />
-            @if (editMode.isEditMode() && state.playersNumber() > 1) {
+            @if (editMode.isEditMode()) {
               <sk-remove-button
                 tooltip="Remove Player"
                 icon="person_remove"
