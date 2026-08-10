@@ -95,8 +95,8 @@ export class StorageService {
 
   loadPlayerCounter(): number {
     try {
-      const counterString = localStorage.getItem(this.playerCounterKey);
-      const counter = Number(counterString);
+      const counterString: string | null = localStorage.getItem(this.playerCounterKey);
+      const counter = Number(counterString ?? 1);
       if (!Number.isNaN(counter) && Number.isInteger(counter)) {
         return counter;
       }
