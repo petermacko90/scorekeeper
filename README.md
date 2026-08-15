@@ -13,8 +13,8 @@ Built with Angular, using signals and signal forms. Styled with Tailwind CSS.
 - add/remove rounds
 - write/view notes about the game
 - reset the board to initial state
-- undo certain actions
+- undo/redo history
 - move the actions panel to top, bottom, left or right
 - responsive layout
 - light/dark/system theme
-- save the state to local storage
+- save game state and preferences to local storage
