@@ -8,4 +8,5 @@ export interface PlayerFormModel {
 export interface ScorekeeperFormModel {
   players: PlayerFormModel[];
   notes: string;
+  playerCounter: number;
 }

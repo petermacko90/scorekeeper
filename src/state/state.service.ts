@@ -15,6 +15,7 @@ export class StateService {
   private readonly initialState: ScorekeeperFormModel = {
     players: [{ name: 'Player 1', score: [null] }],
     notes: '',
+    playerCounter: 1,
   };
 
   scorekeeperModel = signal<ScorekeeperFormModel>(this.initialState);
@@ -28,8 +29,6 @@ export class StateService {
     applyEach(schemaPath.players, this.playersSchema);
     debounce(schemaPath.notes, StateService.debounceTime);
   });
-
-  private playerCounter = signal<number>(this.storage.loadPlayerCounter());
 
   roundsNumber = computed(() => this.scorekeeperForm.players[0].score.length);
   playersNumber = computed(() => this.scorekeeperForm.players.length);
@@ -70,19 +69,17 @@ export class StateService {
   }
 
   addPlayer() {
-    this.playerCounter.update((counter) => counter + 1);
-    this.storage.savePlayerCounter(this.playerCounter());
-
     this.scorekeeperModel.update((data) => {
       return {
         ...data,
         players: [
           ...data.players,
           {
-            name: `Player ${this.playerCounter()}`,
+            name: `Player ${data.playerCounter + 1}`,
             score: new Array(this.roundsNumber()).fill(null),
           },
         ],
+        playerCounter: data.playerCounter + 1,
       };
     });
 
@@ -140,10 +137,7 @@ export class StateService {
   }
 
   reset() {
-    this.playerCounter.set(1);
-    this.storage.savePlayerCounter(this.playerCounter());
     this.scorekeeperForm().reset(this.initialState);
-
     this.addToHistory(this.scorekeeperModel());
   }
 

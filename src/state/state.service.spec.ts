@@ -5,8 +5,6 @@ import { Mocked } from 'vitest';
 import { StorageService } from '../storage/storage.service';
 
 const storageServiceStub: Mocked<StorageService> = {
-  loadPlayerCounter: vi.fn().mockResolvedValue(1),
-  savePlayerCounter: vi.fn(),
   load: vi.fn().mockReturnValue(null),
   save: vi.fn(),
 } as unknown as Mocked<StorageService>;
@@ -36,6 +34,7 @@ describe('StateService', () => {
           score: [1],
         },
       ],
+      playerCounter: 1,
     };
 
     service.addToHistory(newState);
@@ -58,6 +57,7 @@ describe('StateService', () => {
             score: [1],
           },
         ],
+        playerCounter: 1,
       },
       {
         notes: '',
@@ -67,6 +67,7 @@ describe('StateService', () => {
             score: [1, 2],
           },
         ],
+        playerCounter: 1,
       },
       {
         notes: '',
@@ -76,6 +77,7 @@ describe('StateService', () => {
             score: [1, 2, 3],
           },
         ],
+        playerCounter: 1,
       },
       {
         notes: '',
@@ -85,6 +87,7 @@ describe('StateService', () => {
             score: [1, 2, 3, 4],
           },
         ],
+        playerCounter: 1,
       },
       {
         notes: '',
@@ -94,6 +97,7 @@ describe('StateService', () => {
             score: [1, 2, 3, 4, 5],
           },
         ],
+        playerCounter: 1,
       },
       {
         notes: '',
@@ -103,6 +107,7 @@ describe('StateService', () => {
             score: [1, 2, 3, 4, 5, 6],
           },
         ],
+        playerCounter: 1,
       },
       {
         notes: '',
@@ -112,6 +117,7 @@ describe('StateService', () => {
             score: [1, 2, 3, 4, 5, 6, 7],
           },
         ],
+        playerCounter: 1,
       },
       {
         notes: '',
@@ -121,6 +127,7 @@ describe('StateService', () => {
             score: [1, 2, 3, 4, 5, 6, 7, 8],
           },
         ],
+        playerCounter: 1,
       },
       {
         notes: '',
@@ -130,6 +137,7 @@ describe('StateService', () => {
             score: [1, 2, 3, 4, 5, 6, 7, 8, 9],
           },
         ],
+        playerCounter: 1,
       },
       {
         notes: '',
@@ -139,6 +147,7 @@ describe('StateService', () => {
             score: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
           },
         ],
+        playerCounter: 1,
       },
     ];
 
@@ -150,6 +159,7 @@ describe('StateService', () => {
           score: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11],
         },
       ],
+      playerCounter: 1,
     };
 
     service.history.set(oldState);
@@ -174,6 +184,7 @@ describe('StateService', () => {
             score: [1],
           },
         ],
+        playerCounter: 1,
       },
       {
         notes: '',
@@ -183,6 +194,7 @@ describe('StateService', () => {
             score: [1, 2],
           },
         ],
+        playerCounter: 1,
       },
     ];
 
@@ -194,6 +206,7 @@ describe('StateService', () => {
           score: [1],
         },
       ],
+      playerCounter: 1,
     });
     service.history.set(state);
     service.historyCurrentIndex.set(0);
@@ -202,7 +215,7 @@ describe('StateService', () => {
 
     service.undo();
     expect(service.historyCurrentIndex()).toBe(0);
-    expect(service.scorekeeperModel()).toStrictEqual({
+    const expected: ScorekeeperFormModel = {
       notes: '',
       players: [
         {
@@ -210,7 +223,9 @@ describe('StateService', () => {
           score: [1],
         },
       ],
-    });
+      playerCounter: 1,
+    };
+    expect(service.scorekeeperModel()).toStrictEqual(expected);
   });
 
   it('should undo if there are previous steps in history', () => {
@@ -223,6 +238,7 @@ describe('StateService', () => {
             score: [1],
           },
         ],
+        playerCounter: 1,
       },
       {
         notes: '',
@@ -232,6 +248,7 @@ describe('StateService', () => {
             score: [1, 2],
           },
         ],
+        playerCounter: 1,
       },
     ];
 
@@ -242,7 +259,7 @@ describe('StateService', () => {
 
     service.undo();
     expect(service.historyCurrentIndex()).toBe(0);
-    expect(service.scorekeeperModel()).toStrictEqual({
+    const expected: ScorekeeperFormModel = {
       notes: '',
       players: [
         {
@@ -250,7 +267,9 @@ describe('StateService', () => {
           score: [1],
         },
       ],
-    });
+      playerCounter: 1,
+    };
+    expect(service.scorekeeperModel()).toStrictEqual(expected);
   });
 
   it('should not redo if historyCurrentIndex is on last entry', () => {
@@ -263,6 +282,7 @@ describe('StateService', () => {
             score: [1],
           },
         ],
+        playerCounter: 1,
       },
       {
         notes: '',
@@ -272,6 +292,7 @@ describe('StateService', () => {
             score: [1, 2],
           },
         ],
+        playerCounter: 1,
       },
     ];
 
@@ -283,6 +304,7 @@ describe('StateService', () => {
           score: [1, 2],
         },
       ],
+      playerCounter: 1,
     });
     service.history.set(state);
     service.historyCurrentIndex.set(1);
@@ -291,7 +313,7 @@ describe('StateService', () => {
 
     service.redo();
     expect(service.historyCurrentIndex()).toBe(1);
-    expect(service.scorekeeperModel()).toStrictEqual({
+    const expected: ScorekeeperFormModel = {
       notes: '',
       players: [
         {
@@ -299,7 +321,9 @@ describe('StateService', () => {
           score: [1, 2],
         },
       ],
-    });
+      playerCounter: 1,
+    };
+    expect(service.scorekeeperModel()).toStrictEqual(expected);
   });
 
   it('should redo if historyCurrentIndex is not on last entry', () => {
@@ -312,6 +336,7 @@ describe('StateService', () => {
             score: [1],
           },
         ],
+        playerCounter: 1,
       },
       {
         notes: '',
@@ -321,6 +346,7 @@ describe('StateService', () => {
             score: [1, 2],
           },
         ],
+        playerCounter: 1,
       },
     ];
 
@@ -331,7 +357,7 @@ describe('StateService', () => {
 
     service.redo();
     expect(service.historyCurrentIndex()).toBe(1);
-    expect(service.scorekeeperModel()).toStrictEqual({
+    const expected: ScorekeeperFormModel = {
       notes: '',
       players: [
         {
@@ -339,6 +365,8 @@ describe('StateService', () => {
           score: [1, 2],
         },
       ],
-    });
+      playerCounter: 1,
+    };
+    expect(service.scorekeeperModel()).toStrictEqual(expected);
   });
 });
