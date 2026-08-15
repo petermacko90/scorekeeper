@@ -1,33 +1,32 @@
 import { computed, effect, inject, Injectable, signal } from '@angular/core';
+import isEqual from 'lodash/isEqual';
 import { PlayerFormModel, ScorekeeperFormModel } from './state.model';
 import { applyEach, debounce, form, schema } from '@angular/forms/signals';
 import { StorageService } from '../storage/storage.service';
-import { UndoService } from './undo.service';
 import { EditModeService } from '../actions/edit-mode.service';
 
 @Injectable({ providedIn: 'root' })
 export class StateService {
   private storage = inject(StorageService);
-  private undoService = inject(UndoService);
   private editMode = inject(EditModeService);
 
-  private readonly debounceTime = 300;
+  static readonly debounceTime = 300;
 
   private readonly initialState: ScorekeeperFormModel = {
     players: [{ name: 'Player 1', score: [null] }],
     notes: '',
   };
 
-  private scorekeeperModel = signal<ScorekeeperFormModel>(this.initialState);
+  scorekeeperModel = signal<ScorekeeperFormModel>(this.initialState);
 
   private playersSchema = schema<PlayerFormModel>((player) => {
-    debounce(player.name, this.debounceTime);
-    debounce(player.score, this.debounceTime);
+    debounce(player.name, 'blur');
+    debounce(player.score, StateService.debounceTime);
   });
 
   scorekeeperForm = form(this.scorekeeperModel, (schemaPath) => {
     applyEach(schemaPath.players, this.playersSchema);
-    debounce(schemaPath.notes, this.debounceTime);
+    debounce(schemaPath.notes, StateService.debounceTime);
   });
 
   private playerCounter = signal<number>(this.storage.loadPlayerCounter());
@@ -49,6 +48,10 @@ export class StateService {
       });
   });
 
+  private readonly historySize = 10;
+  history = signal<ScorekeeperFormModel[]>([]);
+  historyCurrentIndex = signal<number>(0);
+
   setState(state: ScorekeeperFormModel) {
     this.scorekeeperModel.set(state);
   }
@@ -57,6 +60,7 @@ export class StateService {
     const state = this.storage.load();
     if (state === null) return;
     this.setState(state);
+    this.addToHistory(state);
   }
 
   saveState() {
@@ -66,7 +70,6 @@ export class StateService {
   }
 
   addPlayer() {
-    this.undoService.clearPrevState();
     this.playerCounter.update((counter) => counter + 1);
     this.storage.savePlayerCounter(this.playerCounter());
 
@@ -82,11 +85,11 @@ export class StateService {
         ],
       };
     });
+
+    this.addToHistory(this.scorekeeperModel());
   }
 
   removePlayer(index: number) {
-    this.undoService.setPrevState(this.scorekeeperModel());
-
     if (this.playersNumber() === 1) {
       this.reset();
       this.editMode.toggleEditMode();
@@ -98,11 +101,11 @@ export class StateService {
         };
       });
     }
+
+    this.addToHistory(this.scorekeeperModel());
   }
 
-  addRound() {
-    this.undoService.clearPrevState();
-
+  addRound(shouldAddToHistory = true) {
     this.scorekeeperModel.update((data) => {
       return {
         ...data,
@@ -114,11 +117,13 @@ export class StateService {
         }),
       };
     });
+
+    if (shouldAddToHistory) {
+      this.addToHistory(this.scorekeeperModel());
+    }
   }
 
   removeRound(index: number) {
-    this.undoService.setPrevState(this.scorekeeperModel());
-
     this.scorekeeperModel.update((data) => {
       return {
         ...data,
@@ -130,13 +135,16 @@ export class StateService {
         }),
       };
     });
+
+    this.addToHistory(this.scorekeeperModel());
   }
 
   reset() {
-    this.undoService.setPrevState(this.scorekeeperModel());
     this.playerCounter.set(1);
     this.storage.savePlayerCounter(this.playerCounter());
     this.scorekeeperForm().reset(this.initialState);
+
+    this.addToHistory(this.scorekeeperModel());
   }
 
   isInitialState(): boolean {
@@ -147,5 +155,54 @@ export class StateService {
       this.scorekeeperModel().players[0].score[0] === null &&
       this.scorekeeperModel().notes === ''
     );
+  }
+
+  addToHistory(newState?: ScorekeeperFormModel) {
+    setTimeout(
+      () => {
+        const stateToAdd = newState ?? this.scorekeeperModel();
+        const lastEntry = this.history().at(length - 1);
+        if (isEqual(stateToAdd, lastEntry)) return;
+
+        const sliceStartIndex = this.history().length >= this.historySize ? 1 : 0;
+
+        this.history.update((state) => [
+          ...state.slice(sliceStartIndex, this.historyCurrentIndex() + 1),
+          stateToAdd,
+        ]);
+
+        this.historyCurrentIndex.set(this.history().length - 1);
+      },
+      newState ? 0 : StateService.debounceTime + 50,
+    );
+  }
+
+  isUndoEnabled(): boolean {
+    return this.history().length >= 2 && this.historyCurrentIndex() >= 1;
+  }
+
+  undo() {
+    if (!this.isUndoEnabled()) {
+      return;
+    }
+
+    this.historyCurrentIndex.update((index) => index - 1);
+    this.setState(this.history().at(this.historyCurrentIndex())!);
+  }
+
+  isRedoEnabled(): boolean {
+    return (
+      this.history().length !== this.historyCurrentIndex() + 1 &&
+      this.history().at(this.historyCurrentIndex() + 1) !== undefined
+    );
+  }
+
+  redo() {
+    if (!this.isRedoEnabled()) {
+      return;
+    }
+
+    this.historyCurrentIndex.update((index) => index + 1);
+    this.setState(this.history().at(this.historyCurrentIndex())!);
   }
 }

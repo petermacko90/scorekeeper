@@ -1,7 +1,6 @@
 import { Component, inject, output, viewChild } from '@angular/core';
 import { Button } from '../button/button';
 import { StateService } from '../state/state.service';
-import { UndoService } from '../state/undo.service';
 import { Notes } from '../notes/notes';
 import { ActionsPositionService } from './actions-positions.service';
 import { Settings } from '../settings/settings';
@@ -15,7 +14,6 @@ import { EditModeService } from './edit-mode.service';
 })
 export class Actions {
   state = inject(StateService);
-  undoService = inject(UndoService);
   editMode = inject(EditModeService);
   private actions = inject(ActionsPositionService);
 
@@ -45,10 +43,5 @@ export class Actions {
 
   openSettings() {
     this.settings().dialogRef.nativeElement.querySelector<HTMLDialogElement>('dialog')?.showModal();
-  }
-
-  undo() {
-    this.state.setState(this.undoService.getPrevState()!);
-    this.undoService.clearPrevState();
   }
 }

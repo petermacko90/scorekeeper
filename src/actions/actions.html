@@ -35,9 +35,17 @@
   <sk-button
     text="Undo"
     icon="undo"
-    (action)="undo()"
-    [disabled]="!undoService.isUndoEnabled()"
-    [showText]="!isActionsPositionVertical()"
+    (action)="state.undo()"
+    [disabled]="!state.isUndoEnabled()"
+    [showText]="false"
+    [hideTextOnSmallScreen]="true"
+  />
+  <sk-button
+    text="Redo"
+    icon="redo"
+    (action)="state.redo()"
+    [disabled]="!state.isRedoEnabled()"
+    [showText]="false"
     [hideTextOnSmallScreen]="true"
   />
   <sk-button
