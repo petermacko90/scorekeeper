@@ -44,7 +44,6 @@ describe('StateService', () => {
     });
 
     it('should add players', async () => {
-      service.loadState();
       service.addPlayer();
       service.addPlayer();
       await vi.runAllTimersAsync();
@@ -103,6 +102,97 @@ describe('StateService', () => {
       expect(service.playersNumber()).toBe(2);
       expect(service.scorekeeperModel().players[0].name).toBe('Player 1');
       expect(service.scorekeeperModel().players[1].name).toBe('Player 3');
+    });
+
+    it('should add round and add state to history by default', async () => {
+      const state: ScorekeeperFormModel = {
+        notes: '',
+        playerCounter: 2,
+        players: [
+          { name: 'Player 1', score: [10, null] },
+          { name: 'Player 2', score: [20, null] },
+        ],
+      };
+
+      service.setState(state);
+      service.addRound();
+      await vi.runAllTimersAsync();
+
+      expect(service.scorekeeperModel().players[0].score).toStrictEqual([10, null, null]);
+      expect(service.scorekeeperModel().players[1].score).toStrictEqual([20, null, null]);
+      expect(service.history()[0].players[0].score).toStrictEqual([10, null, null]);
+      expect(service.history()[0].players[1].score).toStrictEqual([20, null, null]);
+    });
+
+    it('should add round and not add to history when shouldAddToHistory is false', async () => {
+      const state: ScorekeeperFormModel = {
+        notes: '',
+        playerCounter: 1,
+        players: [{ name: 'Player 1', score: [1] }],
+      };
+
+      service.setState(state);
+      service.addRound(false);
+      await vi.runAllTimersAsync();
+
+      expect(service.scorekeeperModel().players[0].score).toStrictEqual([1, null]);
+      expect(service.history()).toStrictEqual([]);
+    });
+
+    it('should remove round', async () => {
+      const state: ScorekeeperFormModel = {
+        notes: '',
+        playerCounter: 2,
+        players: [
+          { name: 'Player 1', score: [10, 20, 30] },
+          { name: 'Player 2', score: [15, 25, 35] },
+        ],
+      };
+
+      service.setState(state);
+      service.removeRound(1);
+      await vi.runAllTimersAsync();
+
+      expect(service.scorekeeperModel().players[0].score).toStrictEqual([10, 30]);
+      expect(service.scorekeeperModel().players[1].score).toStrictEqual([15, 35]);
+      expect(service.history()[0].players[0].score).toStrictEqual([10, 30]);
+      expect(service.history()[0].players[1].score).toStrictEqual([15, 35]);
+    });
+
+    it('should reset to initial state', async () => {
+      const state: ScorekeeperFormModel = {
+        notes: 'Test',
+        playerCounter: 2,
+        players: [
+          { name: 'Player 1', score: [10, null] },
+          { name: 'Player 2', score: [15, null] },
+        ],
+      };
+
+      service.setState(state);
+      service.reset();
+      await vi.runAllTimersAsync();
+
+      expect(service.scorekeeperModel().notes).toBe('');
+      expect(service.scorekeeperModel().playerCounter).toBe(1);
+      expect(service.scorekeeperModel().players.length).toBe(1);
+      expect(service.scorekeeperModel().players[0].name).toBe('Player 1');
+      expect(service.scorekeeperModel().players[0].score).toStrictEqual([null]);
+
+      expect(service.history()[0].notes).toBe('');
+      expect(service.history()[0].playerCounter).toBe(1);
+      expect(service.history()[0].players.length).toBe(1);
+      expect(service.history()[0].players[0].name).toBe('Player 1');
+      expect(service.history()[0].players[0].score).toStrictEqual([null]);
+
+      expect(service.isInitialState()).toBe(true);
+    });
+
+    it('should be initial state at load and then not after change', () => {
+      service.loadState();
+      expect(service.isInitialState()).toBe(true);
+      service.addRound();
+      expect(service.isInitialState()).toBe(false);
     });
 
     it('should add to empty history', async () => {
