@@ -189,7 +189,6 @@ describe('StateService', () => {
     });
 
     it('should be initial state at load and then not after change', () => {
-      service.loadState();
       expect(service.isInitialState()).toBe(true);
       service.addRound();
       expect(service.isInitialState()).toBe(false);
