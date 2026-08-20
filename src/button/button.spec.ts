@@ -11,6 +11,11 @@ describe('Button', () => {
     await fixture.whenStable();
     const textSpan: HTMLSpanElement = fixture.nativeElement.querySelectorAll('span')[1];
     expect(textSpan.textContent).toContain('Test');
+
+    const actionSpy = vi.spyOn(fixture.componentInstance.action, 'emit');
+    const button: HTMLButtonElement = fixture.nativeElement.querySelector('button');
+    button.click();
+    expect(actionSpy).toHaveBeenCalled();
   });
 
   it('should not display text if showText is false', async () => {
@@ -27,7 +32,7 @@ describe('Button', () => {
     expect(textSpan).toBeUndefined();
   });
 
-  it('should not hide text on large screen', async () => {
+  it('should display text on large screen', async () => {
     const fixture = TestBed.createComponent(Button, {
       bindings: [
         inputBinding('text', signal('Test')),

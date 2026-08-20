@@ -15,6 +15,6 @@ export class Notes {
   dialogRef: ElementRef<HTMLDialogElement> = inject(ElementRef);
 
   close() {
-    this.dialogRef.nativeElement.querySelector<HTMLDialogElement>('dialog')?.close();
+    this.dialogRef.nativeElement.querySelector<HTMLDialogElement>('dialog')!.close();
   }
 }

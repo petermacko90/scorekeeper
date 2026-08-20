@@ -15,6 +15,11 @@ describe('RemoveButton', () => {
     );
 
     expect(iconSpan.textContent).toContain('delete');
+
+    const actionSpy = vi.spyOn(fixture.componentInstance.action, 'emit');
+    const button: HTMLButtonElement = fixture.nativeElement.querySelector('button');
+    button.click();
+    expect(actionSpy).toHaveBeenCalled();
   });
 
   it('should display passed icon', async () => {
