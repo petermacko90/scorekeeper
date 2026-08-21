@@ -97,6 +97,7 @@ describe('Scoreboard', () => {
     await fixture.whenStable();
     fixture.componentInstance.editMode.toggleEditMode();
     await fixture.whenStable();
+    expect(fixture.componentInstance.editMode.isEditMode()).toBe(true);
 
     const nameInput: HTMLInputElement = fixture.nativeElement.querySelector('input');
     nameInput.value = 'Kamil';
@@ -108,5 +109,71 @@ describe('Scoreboard', () => {
     removePlayerButton.triggerEventHandler('action');
     await fixture.whenStable();
     expect(nameInput.value).toBe('Player 1');
+  });
+
+  it('should remove round', async () => {
+    const fixture = TestBed.createComponent(Scoreboard);
+    await fixture.whenStable();
+
+    fixture.componentInstance.state.addRound();
+    await fixture.whenStable();
+
+    const score1Input: HTMLInputElement =
+      fixture.nativeElement.querySelector('input[type="number"]');
+
+    score1Input.value = '10';
+    score1Input.dispatchEvent(new Event('input'));
+    score1Input.dispatchEvent(new Event('blur'));
+    await fixture.whenStable();
+    expect(score1Input.value).toBe('10');
+
+    fixture.componentInstance.editMode.toggleEditMode();
+    await fixture.whenStable();
+    expect(fixture.componentInstance.editMode.isEditMode()).toBe(true);
+
+    const removeRoundButton = fixture.debugElement.query(By.css('tbody sk-remove-button'));
+    removeRoundButton.triggerEventHandler('action');
+    await fixture.whenStable();
+    expect(score1Input.value).toBe('');
+  });
+
+  it('should not react to non-numerical keys in score input', async () => {
+    const fixture = TestBed.createComponent(Scoreboard);
+    await fixture.whenStable();
+    const addToHistorySpy = vi.spyOn(fixture.componentInstance.state, 'addToHistory');
+
+    const score1Input: HTMLInputElement =
+      fixture.nativeElement.querySelector('input[type="number"]');
+
+    score1Input.dispatchEvent(new KeyboardEvent('keydown', { key: 'a' }));
+    await fixture.whenStable();
+    expect(addToHistorySpy).not.toHaveBeenCalled();
+  });
+
+  it('should react to numerical keys in score input', async () => {
+    const fixture = TestBed.createComponent(Scoreboard);
+    await fixture.whenStable();
+
+    const addRoundSpy = vi.spyOn(fixture.componentInstance.state, 'addRound');
+
+    const score1Input: HTMLInputElement =
+      fixture.nativeElement.querySelector('input[type="number"]');
+
+    const addToHistorySpy = vi.spyOn(fixture.componentInstance.state, 'addToHistory');
+    score1Input.value = '5';
+    score1Input.dispatchEvent(new KeyboardEvent('keydown', { key: '5' }));
+    await fixture.whenStable();
+
+    expect(addToHistorySpy).toHaveBeenCalled();
+    expect(addRoundSpy).toHaveBeenCalledWith(false);
+
+    addToHistorySpy.mockReset();
+    addRoundSpy.mockReset();
+    score1Input.value = '6';
+    score1Input.dispatchEvent(new KeyboardEvent('keydown', { key: '6' }));
+    await fixture.whenStable();
+
+    expect(addToHistorySpy).toHaveBeenCalled();
+    expect(addRoundSpy).not.toHaveBeenCalled();
   });
 });
