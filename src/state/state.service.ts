@@ -12,13 +12,13 @@ export class StateService {
 
   static readonly debounceTime = 300;
 
-  private readonly initialState: ScorekeeperFormModel = {
+  static readonly initialState: ScorekeeperFormModel = {
     players: [{ name: 'Player 1', score: [null] }],
     notes: '',
     playerCounter: 1,
   };
 
-  scorekeeperModel = signal<ScorekeeperFormModel>(this.initialState);
+  scorekeeperModel = signal<ScorekeeperFormModel>(StateService.initialState);
 
   private playersSchema = schema<PlayerFormModel>((player) => {
     debounce(player.name, 'blur');
@@ -40,10 +40,9 @@ export class StateService {
       .players()
       .value()
       .map((player) => {
-        const sum = player.score.reduce((acc, curr) => {
-          return (acc ?? 0) + (curr ?? 0);
-        }, 0);
-        return sum ?? 0;
+        return player.score.reduce((acc, curr) => {
+          return acc! + (curr ?? 0);
+        }, 0)!;
       });
   });
 
@@ -137,7 +136,7 @@ export class StateService {
   }
 
   reset() {
-    this.scorekeeperForm().reset(this.initialState);
+    this.scorekeeperForm().reset(StateService.initialState);
     this.addToHistory(this.scorekeeperModel());
   }
 
