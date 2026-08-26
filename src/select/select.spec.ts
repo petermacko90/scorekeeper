@@ -29,5 +29,12 @@ describe('Select', () => {
     select.value = select.options[2].value;
     select.dispatchEvent(new Event('change'));
     expect(select.value).toBe('light');
+
+    expect(select.options[0].label).toBe('System');
+    expect(select.options[1].label).toBe('Dark');
+    expect(select.options[2].label).toBe('Light');
+
+    const label: HTMLLabelElement = fixture.nativeElement.querySelector('label');
+    expect(label.textContent).toContain('Theme:');
   });
 });
