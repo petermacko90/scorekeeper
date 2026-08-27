@@ -38,10 +38,10 @@ export class Actions {
   }
 
   openNotes() {
-    this.notes().dialogRef.nativeElement.querySelector<HTMLDialogElement>('dialog')?.showModal();
+    this.notes().dialogRef.nativeElement.querySelector<HTMLDialogElement>('dialog')!.showModal();
   }
 
   openSettings() {
-    this.settings().dialogRef.nativeElement.querySelector<HTMLDialogElement>('dialog')?.showModal();
+    this.settings().dialogRef.nativeElement.querySelector<HTMLDialogElement>('dialog')!.showModal();
   }
 }

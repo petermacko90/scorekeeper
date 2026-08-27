@@ -57,6 +57,18 @@ describe('Settings', () => {
       expect(themeSelect.componentInstance.field().value()).toBe('system');
       expect(deleteThemeSpy).toHaveBeenCalled();
     });
+
+    it('should close', async () => {
+      const fixture = TestBed.createComponent(Settings);
+      const dialogNativeElement = fixture.componentInstance.dialogRef.nativeElement;
+      dialogNativeElement.querySelector('dialog')!.close = () => {};
+      const closeSpy = vi.spyOn(dialogNativeElement.querySelector('dialog')!, 'close');
+      await fixture.whenStable();
+
+      const closeButton = fixture.debugElement.query(By.css('sk-button'));
+      closeButton.triggerEventHandler('action');
+      expect(closeSpy).toHaveBeenCalled();
+    });
   });
 
   describe('actions position is left and theme is light', () => {
